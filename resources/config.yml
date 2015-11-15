@@ -1,0 +1,4 @@
+# List of the blocked words, seperated with a comma, example: word1,word2,word3
+badwords: fuck,shit
+# Message that is shown to the player when his message has been blocked
+blockmessage: §eYour message has been §cblocked §eby BadWordBlocker.
