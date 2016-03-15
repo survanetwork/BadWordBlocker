@@ -18,16 +18,6 @@ class BadWordBlocker extends PluginBase implements Listener {
         $this->getServer()->getLogger()->info("§3[BadWordList] §aEnabled successfully");
     }
     
-    public function contains($wort, array $liste) {
-    
-        foreach ($liste as $item) {
-            if (strpos(strtolower($wort),$item) !== FALSE) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
     public function onPlayerChat (PlayerChatEvent $event) {
         $badwordlist = $this->getConfig()->get("badwords");
         $blockmessage = $this->getConfig()->get("blockmessage");
@@ -37,9 +27,17 @@ class BadWordBlocker extends PluginBase implements Listener {
         $list = explode(',', $badwordlist);
         
         if ($this->contains($message, $list)) {
-            // Detected bad word so block it and notify user
             $event->setCancelled(true);
             $player->sendMessage($blockmessage);
         }
+    }
+
+    public function contains($wort, array $liste) {
+        foreach ($liste as $item) {
+            if (strpos(strtolower($wort),$item) !== FALSE) {
+                return true;
+            }
+        }
+        return false;
     }
 }
