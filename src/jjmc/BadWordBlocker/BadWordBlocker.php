@@ -15,19 +15,19 @@ class BadWordBlocker extends PluginBase implements Listener {
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->saveDefaultConfig();
+
+        $this->list = $this->getConfig()->get("badwords");
+        $this->list = explode(',', $this->list);
+        $this->blockmessage = $this->getConfig()->get("blockmessage");
     }
     
-    public function onPlayerChat (PlayerChatEvent $event) {
-        $badwordlist = $this->getConfig()->get("badwords");
-        $blockmessage = $this->getConfig()->get("blockmessage");
+    public function onPlayerChat(PlayerChatEvent $event) {
         $message = $event->getMessage();
         $player = $event->getPlayer();
         
-        $list = explode(',', $badwordlist);
-        
-        if ($this->contains($message, $list)) {
+        if ($this->contains($message, $this->list)) {
+            $player->sendMessage($this->blockmessage);
             $event->setCancelled(true);
-            $player->sendMessage($blockmessage);
         }
     }
 
