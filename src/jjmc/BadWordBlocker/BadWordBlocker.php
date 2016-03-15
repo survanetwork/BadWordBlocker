@@ -15,7 +15,6 @@ class BadWordBlocker extends PluginBase implements Listener {
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->saveDefaultConfig();
-        $this->getServer()->getLogger()->info("§3[BadWordList] §aEnabled successfully");
     }
     
     public function onPlayerChat (PlayerChatEvent $event) {
