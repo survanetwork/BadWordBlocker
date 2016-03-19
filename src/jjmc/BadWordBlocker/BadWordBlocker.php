@@ -7,6 +7,8 @@
 
 namespace jjmc\BadWordBlocker;
 
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
@@ -24,8 +26,25 @@ class BadWordBlocker extends PluginBase implements Listener {
         $this->lastwritten = $this->getConfig()->get("lastwritten");
         $this->timewritten = $this->getConfig()->get("timewritten");
         $this->caps = $this->getConfig()->get("caps");
+
+        $this->chaton = $this->getConfig()->get("chaton");
+        $this->chatoff = $this->getConfig()->get("chatoff");
     }
-    
+
+    public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+        switch(strtolower($command->getName())) {
+            case "chat":
+                if(isset($sender->nochat)) {
+                    unset($sender->nochat);
+                    $sender->sendMessage($this->chaton);
+                } else {
+                    $sender->nochat = true;
+                    $sender->sendMessage($this->chatoff);
+                }
+                return true;
+        }
+    }
+
     public function onPlayerChat(PlayerChatEvent $event) {
         $message = $event->getMessage();
         $player = $event->getPlayer();
@@ -61,6 +80,17 @@ class BadWordBlocker extends PluginBase implements Listener {
         $player->timewritten = new \DateTime();
         $player->timewritten = $player->timewritten->add(new \DateInterval("PT".$this->waitingtime."S"));
         $player->lastwritten = $message;
+
+        $recipients = $event->getRecipients();
+        $newrecipients = array();
+
+        foreach($recipients as $recipient) {
+            if(!isset($recipient->nochat)) {
+                $newrecipients[] = $recipient;
+            }
+        }
+
+        $event->setRecipients($newrecipients);
     }
 
     public function contains($wort, array $liste) {

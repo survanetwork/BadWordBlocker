@@ -5,3 +5,7 @@ api: 1.0.0
 author: SURVA.ml Dev Team
 description: A plugin which blocks specified words in the chat
 website: http://surva.ml/
+commands:
+  chat:
+    description: "Take chat off / on"
+    usage: "/chat"

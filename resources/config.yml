@@ -17,3 +17,6 @@ blockmessage: "§eYour message has been §cblocked §eby BadWordBlocker."
 lastwritten: "§cPlease write something else"
 timewritten: "§cPlease don't write so fast"
 caps: "§cPlease turn off caps"
+
+chaton: "§aYou've activated the chat"
+chatoff: "§aYou've disabled the chat"
