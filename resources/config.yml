@@ -10,7 +10,7 @@
 badwords: "fuck,shit"
 
 # Time between chat messages
-waitingtime: 02
+waitingtime: 03
 
 # Messages
 blockmessage: "§eYour message has been §cblocked §eby BadWordBlocker."

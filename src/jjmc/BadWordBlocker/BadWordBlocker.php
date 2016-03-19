@@ -33,27 +33,34 @@ class BadWordBlocker extends PluginBase implements Listener {
         if($this->contains($message, $this->list)) {
             $player->sendMessage($this->blockmessage);
             $event->setCancelled(true);
-        } elseif (isset($player->lastwritten)) {
+            return;
+        }
+
+        if(isset($player->lastwritten)) {
             if($player->lastwritten == $message) {
                 $player->sendMessage($this->lastwritten);
                 $event->setCancelled(true);
+                return;
             }
-        } elseif(isset($player->timewritten)) {
+        }
+
+        if(isset($player->timewritten)) {
             if($player->timewritten > new \DateTime()) {
                 $player->sendMessage($this->timewritten);
                 $event->setCancelled(true);
+                return;
             }
-        } elseif(ctype_upper($message)) {
-            $player->sendMessage($this->caps);
-            $event->setCancelled(true);
         }
 
-        if(!$event->isCancelled()) {
-            //$player->timewritten = date_add(new \DateTime(), new \DateInterval("PT".$this->waitingtime."S"));
-            $player->timewritten = new \DateTime();
-            $player->timewritten = $player->timewritten->add(new \DateInterval("PT".$this->waitingtime."S"));
-            $player->lastwritten = $message;
+        if(ctype_upper($message)) {
+            $player->sendMessage($this->caps);
+            $event->setCancelled(true);
+            return;
         }
+
+        $player->timewritten = new \DateTime();
+        $player->timewritten = $player->timewritten->add(new \DateInterval("PT".$this->waitingtime."S"));
+        $player->lastwritten = $message;
     }
 
     public function contains($wort, array $liste) {
