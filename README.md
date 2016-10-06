@@ -1,9 +1,11 @@
-<h1>BadWordBlocker</h1>
+# BadWordBlocker
 A chat filter for PocketMine which can block certain things.
 
 ![](https://circleci.com/gh/jjplaying/BadWordBlocker.png?style=shield)
 
 [Get the latest BadWordBlocker artifacts (PHAR file) here](https://buildtest.ml/jjplaying/BadWordBlocker)
+
+## Features
 
 - Blocks specific words
 - Don't let the player write the same message twice
