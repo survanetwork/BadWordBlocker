@@ -1,10 +1,8 @@
 name: BadWordBlocker
-main: jjmc\BadWordBlocker\BadWordBlocker
-version: 1.0.0
-api: 1.0.0
-author: SURVA.ml Dev Team
-description: A plugin which blocks specified words in the chat
-website: http://surva.ml/
+main: jjplaying\BadWordBlocker\BadWordBlocker
+author: jjplaying
+version: 1.0.1
+api: 2.0.0
 commands:
   chat:
     description: "Take chat off / on"
