@@ -22,4 +22,4 @@ Works on:
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 You are free to copy, redistribute, change or expand our work, but you must give credits share it under the same license.
-flatly by [jjplaying](https://github.com/jjplaying/flatly) is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+BadWordBlocker by [jjplaying](https://github.com/jjplaying/BadWordBlocker) is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
