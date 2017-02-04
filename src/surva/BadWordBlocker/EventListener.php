@@ -6,7 +6,7 @@
  * Time: 18:05
  */
 
-namespace jjplaying\BadWordBlocker;
+namespace surva\BadWordBlocker;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;

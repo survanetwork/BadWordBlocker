@@ -6,7 +6,7 @@
  * Time: 18:05
  */
 
-namespace jjplaying\BadWordBlocker;
+namespace surva\BadWordBlocker;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -16,8 +16,8 @@ class BadWordBlocker extends PluginBase {
     private $list;
 
     public function onEnable() {
-        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $this->saveDefaultConfig();
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
         $this->list = $this->getConfig()->get("badwords");
         $this->list = explode(',', $this->list);

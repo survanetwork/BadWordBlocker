@@ -4,7 +4,7 @@
 # | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
 # |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
 #
-# (C) 2016 by jjplaying | https://github.com/jjplaying
+# (C) 2017 by surva network | https://github.com/survanetwork
 
 # List of the blocked words, seperated with a comma, example: word1,word2,word3
 badwords: "fuck,shit"

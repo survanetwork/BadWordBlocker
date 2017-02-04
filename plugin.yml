@@ -1,6 +1,5 @@
 name: BadWordBlocker
-main: jjplaying\BadWordBlocker\BadWordBlocker
-author: jjplaying
+main: surva\BadWordBlocker\BadWordBlocker
 version: 1.0.1
 api: 2.0.0
 commands:
