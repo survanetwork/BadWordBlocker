@@ -1,0 +1,6 @@
+branches:
+- master
+
+projects:
+  BadWordBlocker:
+    path: ""
