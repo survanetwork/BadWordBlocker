@@ -1,9 +1,9 @@
 # BadWordBlocker
 A chat filter for PocketMine-MP which can block certain things.
 
-![](https://circleci.com/gh/survanetwork/BadWordBlocker.png?style=shield)
+![](https://poggit.pmmp.io/ci.badge/survanetwork/BadWordBlocker/BadWordBlocker)
 
-[Get the latest BadWordBlocker artifacts (PHAR file) here](https://buildtest.yellowlake.net/survanetwork/BadWordBlocker)
+[Get the latest BadWordBlocker artifacts (PHAR file) here](https://poggit.pmmp.io/ci/survanetwork/BadWordBlocker/BadWordBlocker)
 
 ## Features
 
