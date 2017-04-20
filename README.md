@@ -1,5 +1,5 @@
 # BadWordBlocker
-A chat filter for PocketMine-MP which can block certain things.
+A chat filter which can block certain things
 
 ![](https://poggit.pmmp.io/ci.badge/survanetwork/BadWordBlocker/BadWordBlocker)
 
