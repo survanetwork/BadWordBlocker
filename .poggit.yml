@@ -4,3 +4,4 @@ branches:
 projects:
   BadWordBlocker:
     path: ""
+    icon: "icon.png"
