@@ -6,13 +6,14 @@
  * Time: 18:05
  */
 
-namespace surva\BadWordBlocker;
+namespace surva\badwordblocker;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\PluginBase;
 
 class BadWordBlocker extends PluginBase {
+    /* @var array */
     private $list;
 
     public function onEnable() {
@@ -23,7 +24,7 @@ class BadWordBlocker extends PluginBase {
         $this->list = explode(',', $this->list);
     }
 
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
         switch(strtolower($command->getName())) {
             case "chat":
                 if(isset($sender->nochat)) {
@@ -49,9 +50,9 @@ class BadWordBlocker extends PluginBase {
      * @param array $contains
      * @return bool
      */
-    public function contains($string, array $contains) {
+    public function contains($string, array $contains): bool {
         foreach($contains as $contain) {
-            if(strpos(strtolower($string), $contain) !== FALSE) {
+            if(strpos(strtolower($string), $contain) !== false) {
                 return true;
             }
         }

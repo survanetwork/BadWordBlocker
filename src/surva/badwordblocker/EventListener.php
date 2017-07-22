@@ -6,18 +6,22 @@
  * Time: 18:05
  */
 
-namespace surva\BadWordBlocker;
+namespace surva\badwordblocker;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 
 class EventListener implements Listener {
+    /* @var BadWordBlocker */
     private $badWordBlocker;
 
     public function __construct(BadWordBlocker $badWordBlocker) {
         $this->badWordBlocker = $badWordBlocker;
     }
 
+    /**
+     * @param PlayerChatEvent $event
+     */
     public function onPlayerChat(PlayerChatEvent $event) {
         $player = $event->getPlayer();
         $message = $event->getMessage();
