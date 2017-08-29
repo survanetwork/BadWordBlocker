@@ -61,6 +61,17 @@ class BadWordBlocker extends PluginBase {
     }
 
     /**
+     * Counts uppercase chars in a string
+     *
+     * @param $string
+     * @return int
+     */
+	public function countUppercaseChars(string $string): int{
+		preg_match_all("/[A-Z]/", $string, $matches);
+		return count($matches[0]);
+	}
+
+    /**
      * @return array
      */
     public function getList(): array {

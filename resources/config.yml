@@ -12,6 +12,11 @@ badwords: "fuck,shit"
 # Time between chat messages
 waitingtime: 03
 
+# Percentage of uppercase chars in a message required to trigger caps checker
+uppercasepercentage: 0.75
+# Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI,OK,etc.)
+minimumchars: 3
+
 # Messages
 blockmessage: "§eYour message has been §cblocked §eby BadWordBlocker."
 lastwritten: "§cPlease write something else"
