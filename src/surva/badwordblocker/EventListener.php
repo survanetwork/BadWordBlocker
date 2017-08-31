@@ -51,7 +51,10 @@ class EventListener implements Listener {
             }
         }
 
-        if(ctype_upper($message)) {
+        if(
+			($this->getBadWordBlocker()->countUppercaseChars($message) / strlen($message)) >= $this->getBadWordBlocker()->getConfig()->get("uppercasepercentage")
+			&& strlen($message) >= $this->getBadWordBlocker()->getConfig()->get("minimumchars")
+		){
             $player->sendMessage($this->getBadWordBlocker()->getConfig()->get("caps"));
             $event->setCancelled(true);
 

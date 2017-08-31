@@ -1,6 +1,6 @@
 name: BadWordBlocker
 main: surva\badwordblocker\BadWordBlocker
-version: 1.0.3
+version: 1.0.4
 api: 3.0.0-ALPHA7
 commands:
   chat:
