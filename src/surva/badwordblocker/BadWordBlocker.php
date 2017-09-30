@@ -10,6 +10,7 @@ namespace surva\badwordblocker;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class BadWordBlocker extends PluginBase {
@@ -44,6 +45,52 @@ class BadWordBlocker extends PluginBase {
     }
 
     /**
+     * Check the message of a player on the different aspects (true = alright; false = found something)
+     *
+     * @param Player $player
+     * @param string $message
+     * @return bool
+     */
+    public function checkMessage(Player $player, string $message): bool {
+        if($this->contains($message, $this->getList())) {
+            $player->sendMessage($this->getConfig()->get("blockmessage"));
+
+            return false;
+        }
+
+        if(isset($player->lastwritten)) {
+            if($player->lastwritten == $message) {
+                $player->sendMessage($this->getConfig()->get("lastwritten"));
+
+                return false;
+            }
+        }
+
+        if(isset($player->timewritten)) {
+            if($player->timewritten > new \DateTime()) {
+                $player->sendMessage($this->getConfig()->get("timewritten"));
+
+                return false;
+            }
+        }
+
+        if(
+            ($this->countUppercaseChars($message) / strlen($message)) >= $this->getConfig()->get("uppercasepercentage")
+            && strlen($message) >= $this->getConfig()->get("minimumchars")
+        ) {
+            $player->sendMessage($this->getConfig()->get("caps"));
+
+            return false;
+        }
+
+        $player->timewritten = new \DateTime();
+        $player->timewritten = $player->timewritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
+        $player->lastwritten = $message;
+
+        return true;
+    }
+
+    /**
      * Check if a string contains a specific string from an array
      *
      * @param $string
@@ -66,8 +113,9 @@ class BadWordBlocker extends PluginBase {
      * @param $string
      * @return int
      */
-	public function countUppercaseChars(string $string): int{
+	public function countUppercaseChars(string $string): int {
 		preg_match_all("/[A-Z]/", $string, $matches);
+
 		return count($matches[0]);
 	}
 
