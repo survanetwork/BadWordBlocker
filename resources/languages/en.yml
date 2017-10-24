@@ -1,0 +1,20 @@
+#  ____            ___        __            _ ____  _            _
+# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
+# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
+# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
+# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
+#
+# (C) 2017 by surva network | https://github.com/survanetwork
+
+# English language
+
+# Block messages
+blocked:
+  message: "§eYour message has been §cblocked §eby BadWordBlocker."
+  lastwritten: "§cPlease write something else."
+  timewritten: "§cPlease don't write so fast."
+  caps: "§cPlease turn off caps."
+
+chat:
+  on: "§aYou've enabled the chat."
+  off: "§6You've disabled the chat."
