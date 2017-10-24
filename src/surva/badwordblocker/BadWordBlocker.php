@@ -12,30 +12,39 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 
 class BadWordBlocker extends PluginBase {
+    /* @var Config */
+    private $messages;
+
     /* @var array */
-    private $list;
+    private $blockedWords;
 
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
-        $this->list = $this->getConfig()->get("badwords");
-        $this->list = explode(',', $this->list);
+        $this->messages = new Config($this->getFile() . "resources/languages/" . $this->getConfig()->get("language") . ".yml");
+
+        $this->blockedWords = $this->getConfig()->get("badwords");
+
+        if(!is_array($this->blockedWords)) {
+            $this->blockedWords = explode(',', $this->blockedWords);
+        }
     }
 
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
         switch(strtolower($command->getName())) {
             case "chat":
-                if(isset($sender->nochat)) {
-                    unset($sender->nochat);
+                if(isset($sender->chatDisabled)) {
+                    unset($sender->chatDisabled);
 
-                    $sender->sendMessage($this->getConfig()->get("chaton"));
+                    $sender->sendMessage($this->getMessage("chat.on"));
                 } else {
-                    $sender->nochat = true;
+                    $sender->chatDisabled = true;
 
-                    $sender->sendMessage($this->getConfig()->get("chatoff"));
+                    $sender->sendMessage($this->getMessage("chat.off"));
                 }
 
                 return true;
@@ -52,40 +61,44 @@ class BadWordBlocker extends PluginBase {
      * @return bool
      */
     public function checkMessage(Player $player, string $message): bool {
-        if($this->contains($message, $this->getList())) {
-            $player->sendMessage($this->getConfig()->get("blockmessage"));
+        if($this->contains($message, $this->getBlockedWords())) {
+            $player->sendMessage($this->getMessage("blocked.message"));
 
             return false;
         }
 
-        if(isset($player->lastwritten)) {
-            if($player->lastwritten == $message) {
-                $player->sendMessage($this->getConfig()->get("lastwritten"));
+        if(isset($player->lastWritten)) {
+            if($player->lastWritten == $message) {
+                $player->sendMessage($this->getMessage("blocked.lastwritten"));
 
                 return false;
             }
         }
 
-        if(isset($player->timewritten)) {
-            if($player->timewritten > new \DateTime()) {
-                $player->sendMessage($this->getConfig()->get("timewritten"));
+        if(isset($player->timeWritten)) {
+            if($player->timeWritten > new \DateTime()) {
+                $player->sendMessage($this->getMessage("blocked.timewritten"));
 
                 return false;
             }
         }
 
-        if(
-            ($this->countUppercaseChars($message) / strlen($message)) >= $this->getConfig()->get("uppercasepercentage")
-            && strlen($message) >= $this->getConfig()->get("minimumchars")
-        ) {
-            $player->sendMessage($this->getConfig()->get("caps"));
+        $uppercasePercentage = $this->getConfig()->get("uppercasepercentage");
+        $minimumChars = $this->getConfig()->get("minimumchars");
 
-            return false;
+        $len = strlen($message);
+
+        if($len > 0) {
+            if(($this->countUppercaseChars($message) / $len) >= $uppercasePercentage AND $len >= $minimumChars) {
+                $player->sendMessage($this->getMessage("blocked.caps"));
+
+                return false;
+            }
         }
 
-        $player->timewritten = new \DateTime();
-        $player->timewritten = $player->timewritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
-        $player->lastwritten = $message;
+        $player->timeWritten = new \DateTime();
+        $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
+        $player->lastWritten = $message;
 
         return true;
     }
@@ -120,9 +133,39 @@ class BadWordBlocker extends PluginBase {
 	}
 
     /**
+     * Get a translated message
+     *
+     * @param string $key
+     * @param array $replaces
+     * @return string
+     */
+    public function getMessage(string $key, array $replaces = array()): string {
+        $messages = $this->getMessages();
+
+        if($rawMessage = $this->getMessages()->getNested($key)) {
+            if(is_array($replaces)) {
+                foreach($replaces as $replace => $value) {
+                    $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
+                }
+            }
+
+            return $rawMessage;
+        }
+
+        return $key;
+    }
+
+    /**
      * @return array
      */
-    public function getList(): array {
-        return $this->list;
+    public function getBlockedWords(): array {
+        return $this->blockedWords;
+    }
+
+    /**
+     * @return Config
+     */
+    public function getMessages(): Config {
+        return $this->messages;
     }
 }

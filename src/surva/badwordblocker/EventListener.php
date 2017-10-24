@@ -48,15 +48,15 @@ class EventListener implements Listener {
         }
 
         $recipients = $event->getRecipients();
-        $newrecipients = array();
+        $newRecipients = array();
 
         foreach($recipients as $recipient) {
             if(!isset($recipient->nochat)) {
-                $newrecipients[] = $recipient;
+                $newRecipients[] = $recipient;
             }
         }
 
-        $event->setRecipients($newrecipients);
+        $event->setRecipients($newRecipients);
     }
 
     /**

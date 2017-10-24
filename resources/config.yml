@@ -6,22 +6,20 @@
 #
 # (C) 2017 by surva network | https://github.com/survanetwork
 
-# List of the blocked words, seperated with a comma, example: word1,word2,word3
-badwords: "fuck,shit"
+# Language of the plugin messages
+# Possible options are: en (English), de (German)
+language: "en"
 
-# Time between chat messages
-waitingtime: 03
+# List of the blocked words
+badwords:
+  - "fuck"
+  - "shit"
+
+# Minimum time between chat messages in seconds
+waitingtime: 2
 
 # Percentage of uppercase chars in a message required to trigger caps checker
 uppercasepercentage: 0.75
-# Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI,OK,etc.)
+
+# Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI, OK, etc.)
 minimumchars: 3
-
-# Messages
-blockmessage: "§eYour message has been §cblocked §eby BadWordBlocker."
-lastwritten: "§cPlease write something else"
-timewritten: "§cPlease don't write so fast"
-caps: "§cPlease turn off caps"
-
-chaton: "§aYou've activated the chat"
-chatoff: "§aYou've disabled the chat"
