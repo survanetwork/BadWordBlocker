@@ -140,8 +140,6 @@ class BadWordBlocker extends PluginBase {
      * @return string
      */
     public function getMessage(string $key, array $replaces = array()): string {
-        $messages = $this->getMessages();
-
         if($rawMessage = $this->getMessages()->getNested($key)) {
             if(is_array($replaces)) {
                 foreach($replaces as $replace => $value) {
