@@ -10,11 +10,7 @@ A chat filter which can block certain things
 - Blocks specific words
 - Don't let the player write the same message twice
 - Time between chat messages (Anti-Spam)
-- Anti-Caps (not fully working)
-
-Works on:
-
-- [PocketMine-MP](https://github.com/pmmp/PocketMine-MP)
+- Anti-Caps
 
 ## License & Credits
 [![Creative Commons License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
