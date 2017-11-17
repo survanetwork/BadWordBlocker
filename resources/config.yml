@@ -7,7 +7,7 @@
 # (C) 2017 by surva network | https://github.com/survanetwork
 
 # Language of the plugin messages
-# Possible options are: en (English), de (German)
+# Possible options are: en (English), de (German), ru (Russian)
 language: "en"
 
 # List of the blocked words
