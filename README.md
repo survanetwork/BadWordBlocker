@@ -1,4 +1,6 @@
 # BadWordBlocker
+People view: [![HitCount](http://hits.dwyl.io/{username}/BadWordBlocker.svg)](http://hits.dwyl.io/{username}/BadWordBlocker)
+
 A chat filter which can block certain things
 
 ![](https://poggit.pmmp.io/ci.badge/survanetwork/BadWordBlocker/BadWordBlocker)
