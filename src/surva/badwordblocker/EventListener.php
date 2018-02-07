@@ -23,7 +23,7 @@ class EventListener implements Listener {
     /**
      * @param PlayerCommandPreprocessEvent $event
      */
-    public function onPlayerCommandPreprocess(PlayerCommandPreprocessEvent $event) {
+    public function onPlayerCommandPreprocess(PlayerCommandPreprocessEvent $event): void {
         $player = $event->getPlayer();
         $message = $event->getMessage();
 
@@ -39,7 +39,7 @@ class EventListener implements Listener {
     /**
      * @param PlayerChatEvent $event
      */
-    public function onPlayerChat(PlayerChatEvent $event) {
+    public function onPlayerChat(PlayerChatEvent $event): void {
         $player = $event->getPlayer();
         $message = $event->getMessage();
 
