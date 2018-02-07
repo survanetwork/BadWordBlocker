@@ -23,9 +23,9 @@ class BadWordBlocker extends PluginBase {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
-        $this->messages = new Config($this->getFile() . "resources/languages/" . $this->getConfig()->get("language") . ".yml");
+        $this->messages = new Config($this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml");
 
-        $this->blockedWords = $this->getConfig()->get("badwords");
+        $this->blockedWords = $this->getConfig()->get("badwords", array("fuck", "shit", "bitch"));
     }
 
     /**
@@ -36,7 +36,7 @@ class BadWordBlocker extends PluginBase {
      * @return bool
      */
     public function checkMessage(Player $player, string $message): bool {
-        if($this->getConfig()->get("ignorespaces") === true) {
+        if($this->getConfig()->get("ignorespaces", true) === true) {
             $message = str_replace(" ", "", $message);
         }
 
@@ -62,8 +62,8 @@ class BadWordBlocker extends PluginBase {
             }
         }
 
-        $uppercasePercentage = $this->getConfig()->get("uppercasepercentage");
-        $minimumChars = $this->getConfig()->get("minimumchars");
+        $uppercasePercentage = $this->getConfig()->get("uppercasepercentage", 0.75);
+        $minimumChars = $this->getConfig()->get("minimumchars", 3);
 
         $messageLength = strlen($message);
 
@@ -75,7 +75,7 @@ class BadWordBlocker extends PluginBase {
 
         try {
             $player->timeWritten = new \DateTime();
-            $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
+            $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S"));
             $player->lastWritten = $message;
         } catch(\Exception $exception) {
             return false;
