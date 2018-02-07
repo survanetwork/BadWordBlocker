@@ -4,7 +4,7 @@
 # | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
 # |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
 #
-# (C) 2017 by surva network | https://github.com/survanetwork
+# (C) 2018 by surva network | https://github.com/survanetwork
 
 # German language
 
@@ -14,7 +14,3 @@ blocked:
   lastwritten: "§cBitte schreibe etwas anderes."
   timewritten: "§cBitte schreibe nicht so schnell."
   caps: "§cBitte schreibe nicht alles in Großbuchstaben."
-
-chat:
-  on: "§aDu hast den Chat aktiviert."
-  off: "§6Du hast den Chat deaktiviert."

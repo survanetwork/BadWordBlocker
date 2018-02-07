@@ -8,8 +8,6 @@
 
 namespace surva\badwordblocker;
 
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -28,29 +26,6 @@ class BadWordBlocker extends PluginBase {
         $this->messages = new Config($this->getFile() . "resources/languages/" . $this->getConfig()->get("language") . ".yml");
 
         $this->blockedWords = $this->getConfig()->get("badwords");
-
-        if(!is_array($this->blockedWords)) {
-            $this->blockedWords = explode(',', $this->blockedWords);
-        }
-    }
-
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
-        switch(strtolower($command->getName())) {
-            case "chat":
-                if(isset($sender->chatDisabled)) {
-                    unset($sender->chatDisabled);
-
-                    $sender->sendMessage($this->getMessage("chat.on"));
-                } else {
-                    $sender->chatDisabled = true;
-
-                    $sender->sendMessage($this->getMessage("chat.off"));
-                }
-
-                return true;
-        }
-
-        return false;
     }
 
     /**
@@ -61,6 +36,10 @@ class BadWordBlocker extends PluginBase {
      * @return bool
      */
     public function checkMessage(Player $player, string $message): bool {
+        if($this->getConfig()->get("ignorespaces") === true) {
+            $message = str_replace(" ", "", $message);
+        }
+
         if($this->contains($message, $this->getBlockedWords())) {
             $player->sendMessage($this->getMessage("blocked.message"));
 
@@ -68,7 +47,7 @@ class BadWordBlocker extends PluginBase {
         }
 
         if(isset($player->lastWritten)) {
-            if($player->lastWritten == $message) {
+            if($player->lastWritten === $message) {
                 $player->sendMessage($this->getMessage("blocked.lastwritten"));
 
                 return false;
@@ -86,19 +65,21 @@ class BadWordBlocker extends PluginBase {
         $uppercasePercentage = $this->getConfig()->get("uppercasepercentage");
         $minimumChars = $this->getConfig()->get("minimumchars");
 
-        $len = strlen($message);
+        $messageLength = strlen($message);
 
-        if($len > 0) {
-            if(($this->countUppercaseChars($message) / $len) >= $uppercasePercentage AND $len >= $minimumChars) {
-                $player->sendMessage($this->getMessage("blocked.caps"));
+        if($messageLength > $minimumChars AND ($this->countUppercaseChars($message) / $messageLength) >= $uppercasePercentage) {
+            $player->sendMessage($this->getMessage("blocked.caps"));
 
-                return false;
-            }
+            return false;
         }
 
-        $player->timeWritten = new \DateTime();
-        $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
-        $player->lastWritten = $message;
+        try {
+            $player->timeWritten = new \DateTime();
+            $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime") . "S"));
+            $player->lastWritten = $message;
+        } catch(\Exception $exception) {
+            return false;
+        }
 
         return true;
     }
@@ -123,7 +104,7 @@ class BadWordBlocker extends PluginBase {
     /**
      * Counts uppercase chars in a string
      *
-     * @param $string
+     * @param string $string
      * @return int
      */
 	public function countUppercaseChars(string $string): int {

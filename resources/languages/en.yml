@@ -4,7 +4,7 @@
 # | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
 # |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
 #
-# (C) 2017 by surva network | https://github.com/survanetwork
+# (C) 2018 by surva network | https://github.com/survanetwork
 
 # English language
 
@@ -14,7 +14,3 @@ blocked:
   lastwritten: "§cPlease write something else."
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."
-
-chat:
-  on: "§aYou've enabled the chat."
-  off: "§6You've disabled the chat."

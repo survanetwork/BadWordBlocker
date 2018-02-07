@@ -46,17 +46,6 @@ class EventListener implements Listener {
         if(!$this->getBadWordBlocker()->checkMessage($player, $message)) {
             $event->setCancelled();
         }
-
-        $recipients = $event->getRecipients();
-        $newRecipients = array();
-
-        foreach($recipients as $recipient) {
-            if(!isset($recipient->nochat)) {
-                $newRecipients[] = $recipient;
-            }
-        }
-
-        $event->setRecipients($newRecipients);
     }
 
     /**

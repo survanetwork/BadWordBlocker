@@ -4,7 +4,7 @@
 # | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
 # |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
 #
-# (C) 2017 by surva network | https://github.com/survanetwork
+# (C) 2018 by surva network | https://github.com/survanetwork
 
 # Language of the plugin messages
 # Possible options are: en (English), de (German), ru (Russian)
@@ -15,6 +15,9 @@ badwords:
   - "fuck"
   - "shit"
   - "bitch"
+
+# Ignore spaces in messages when checking for swear words / spam
+ignorespaces: true
 
 # Minimum time between chat messages in seconds
 waitingtime: 2

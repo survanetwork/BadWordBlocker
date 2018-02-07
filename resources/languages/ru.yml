@@ -4,9 +4,9 @@
 # | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
 # |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
 #
-# (C) 2017 by surva network | https://github.com/survanetwork
+# (C) 2018 by surva network | https://github.com/survanetwork
 
-# Russian language by @dirouc (Github)
+# Russian language by @dirouc (GitHub)
 
 # Block messages
 blocked:
@@ -14,7 +14,3 @@ blocked:
   lastwritten: "§cПожалуйста, напишите еще что-нибудь."
   timewritten: "§cПожалуйста, не пишите так быстро."
   caps: "§cОтключите КАПС."
-
-chat:
-  on: "§aВам включили чат."
-  off: "§6Вам отключили чат."
