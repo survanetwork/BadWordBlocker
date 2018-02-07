@@ -6,11 +6,9 @@ A chat filter which can block certain things
 [Get the latest BadWordBlocker artifacts (PHAR file) here](https://poggit.pmmp.io/ci/survanetwork/BadWordBlocker/BadWordBlocker)
 
 ## Description
-
 BadWorkBlocker is a feature rich chat filter suitable for huge servers to keep the chat clean from swear words and spam. It's highly configurable for nearly every needs.
 
 ## Features
-
 The main features of this plugin are:
 
 - **SWEAR FILTER** Block messages containing swear words (specified in the config file)
@@ -19,7 +17,6 @@ The main features of this plugin are:
 - **ANTI CAPS** Filter messages containing too much uppercase letters
 
 ## Usage
-
 All settings can be changed in the `config.yml`-file, there are no commands:
 
 ```yaml
@@ -49,7 +46,6 @@ minimumchars: 3
 ```
 
 ## Contribution
-
 Feel free to contribute if you have ideas or found an issue.
 
 You can:
