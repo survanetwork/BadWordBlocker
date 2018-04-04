@@ -23,7 +23,9 @@ class BadWordBlocker extends PluginBase {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
-        $this->messages = new Config($this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml");
+        $this->messages = new Config(
+            $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
+        );
 
         $this->blockedWords = $this->getConfig()->get("badwords", array("fuck", "shit", "bitch"));
     }
@@ -67,7 +69,9 @@ class BadWordBlocker extends PluginBase {
 
         $messageLength = strlen($message);
 
-        if($messageLength > $minimumChars AND ($this->countUppercaseChars($message) / $messageLength) >= $uppercasePercentage) {
+        if($messageLength > $minimumChars AND ($this->countUppercaseChars(
+                    $message
+                ) / $messageLength) >= $uppercasePercentage) {
             $player->sendMessage($this->getMessage("blocked.caps"));
 
             return false;
@@ -75,7 +79,9 @@ class BadWordBlocker extends PluginBase {
 
         try {
             $player->timeWritten = new \DateTime();
-            $player->timeWritten = $player->timeWritten->add(new \DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S"));
+            $player->timeWritten = $player->timeWritten->add(
+                new \DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
+            );
             $player->lastWritten = $message;
         } catch(\Exception $exception) {
             return false;
@@ -107,11 +113,11 @@ class BadWordBlocker extends PluginBase {
      * @param string $string
      * @return int
      */
-	public function countUppercaseChars(string $string): int {
-		preg_match_all("/[A-Z]/", $string, $matches);
+    public function countUppercaseChars(string $string): int {
+        preg_match_all("/[A-Z]/", $string, $matches);
 
-		return count($matches[0]);
-	}
+        return count($matches[0]);
+    }
 
     /**
      * Get a translated message
