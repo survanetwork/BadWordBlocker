@@ -5,7 +5,7 @@
 <br>
 
 <h1 align="center">BadWordBlocker</h1>
-<p align="center">A chat filter which can block certain things</p>
+<p align="center">A Chat Filter which can block certain things</p>
 
 <br>
 
