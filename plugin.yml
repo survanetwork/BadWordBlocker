@@ -1,7 +1,7 @@
 name: BadWordBlocker
 main: surva\badwordblocker\BadWordBlocker
-version: 1.2.5
-api: [3.0.0-ALPHA7, 3.0.0-ALPHA8, 3.0.0-ALPHA9, 3.0.0-ALPHA10, 3.0.0-ALPHA11, 3.0.0-ALPHA12]
+version: 1.2.6
+api: 3.0.0
 
 author: survanetwork
 description: A chat filter which can block certain things
