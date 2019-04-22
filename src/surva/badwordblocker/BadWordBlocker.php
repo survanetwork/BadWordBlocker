@@ -19,6 +19,12 @@ class BadWordBlocker extends PluginBase {
     /* @var array */
     private $blockedWords;
 
+    /* @var array */
+    private $playersTimeWritten;
+
+    /* @var array */
+    private $playersLastWritten;
+
     public function onEnable() {
         $this->saveDefaultConfig();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -28,6 +34,9 @@ class BadWordBlocker extends PluginBase {
         );
 
         $this->blockedWords = $this->getConfig()->get("badwords", array("fuck", "shit", "bitch"));
+
+        $this->playersTimeWritten = array();
+        $this->playersLastWritten = array();
     }
 
     /**
@@ -38,6 +47,8 @@ class BadWordBlocker extends PluginBase {
      * @return bool
      */
     public function checkMessage(Player $player, string $message): bool {
+        $playerName = $player->getName();
+
         if($this->getConfig()->get("ignorespaces", true) === true) {
             $message = str_replace(" ", "", $message);
         }
@@ -48,16 +59,16 @@ class BadWordBlocker extends PluginBase {
             return false;
         }
 
-        if(isset($player->lastWritten)) {
-            if($player->lastWritten === $message) {
+        if(isset($this->playersLastWritten[$playerName])) {
+            if($this->playersLastWritten[$playerName] === $message) {
                 $player->sendMessage($this->getMessage("blocked.lastwritten"));
 
                 return false;
             }
         }
 
-        if(isset($player->timeWritten)) {
-            if($player->timeWritten > new \DateTime()) {
+        if(isset($this->playersTimeWritten[$playerName])) {
+            if($this->playersTimeWritten[$playerName] > new \DateTime()) {
                 $player->sendMessage($this->getMessage("blocked.timewritten"));
 
                 return false;
@@ -78,11 +89,11 @@ class BadWordBlocker extends PluginBase {
         }
 
         try {
-            $player->timeWritten = new \DateTime();
-            $player->timeWritten = $player->timeWritten->add(
+            $this->playersTimeWritten[$playerName] = new \DateTime();
+            $this->playersTimeWritten[$playerName] = $this->playersTimeWritten[$playerName]->add(
                 new \DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
             );
-            $player->lastWritten = $message;
+            $this->playersLastWritten[$playerName] = $message;
         } catch(\Exception $exception) {
             return false;
         }
