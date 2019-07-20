@@ -8,6 +8,9 @@
 
 namespace surva\badwordblocker;
 
+use DateInterval;
+use DateTime;
+use Exception;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -53,48 +56,56 @@ class BadWordBlocker extends PluginBase {
             $message = str_replace(" ", "", $message);
         }
 
-        if($this->contains($message, $this->getBlockedWords())) {
-            $player->sendMessage($this->getMessage("blocked.message"));
-
-            return false;
-        }
-
-        if(isset($this->playersLastWritten[$playerName])) {
-            if($this->playersLastWritten[$playerName] === $message) {
-                $player->sendMessage($this->getMessage("blocked.lastwritten"));
+        if(!$player->hasPermission("badwordblocker.bypass.swear")) {
+            if($this->contains($message, $this->getBlockedWords())) {
+                $player->sendMessage($this->getMessage("blocked.message"));
 
                 return false;
             }
         }
 
-        if(isset($this->playersTimeWritten[$playerName])) {
-            if($this->playersTimeWritten[$playerName] > new \DateTime()) {
-                $player->sendMessage($this->getMessage("blocked.timewritten"));
+        if(!$player->hasPermission("badwordblocker.bypass.same")) {
+            if(isset($this->playersLastWritten[$playerName])) {
+                if($this->playersLastWritten[$playerName] === $message) {
+                    $player->sendMessage($this->getMessage("blocked.lastwritten"));
 
-                return false;
+                    return false;
+                }
             }
         }
 
-        $uppercasePercentage = $this->getConfig()->get("uppercasepercentage", 0.75);
-        $minimumChars = $this->getConfig()->get("minimumchars", 3);
+        if(!$player->hasPermission("badwordblocker.bypass.spam")) {
+            if(isset($this->playersTimeWritten[$playerName])) {
+                if($this->playersTimeWritten[$playerName] > new DateTime()) {
+                    $player->sendMessage($this->getMessage("blocked.timewritten"));
 
-        $messageLength = strlen($message);
+                    return false;
+                }
+            }
+        }
 
-        if($messageLength > $minimumChars AND ($this->countUppercaseChars(
-                    $message
-                ) / $messageLength) >= $uppercasePercentage) {
-            $player->sendMessage($this->getMessage("blocked.caps"));
+        if(!$player->hasPermission("badwordblocker.bypass.caps")) {
+            $uppercasePercentage = $this->getConfig()->get("uppercasepercentage", 0.75);
+            $minimumChars = $this->getConfig()->get("minimumchars", 3);
 
-            return false;
+            $messageLength = strlen($message);
+
+            if($messageLength > $minimumChars AND ($this->countUppercaseChars(
+                        $message
+                    ) / $messageLength) >= $uppercasePercentage) {
+                $player->sendMessage($this->getMessage("blocked.caps"));
+
+                return false;
+            }
         }
 
         try {
-            $this->playersTimeWritten[$playerName] = new \DateTime();
+            $this->playersTimeWritten[$playerName] = new DateTime();
             $this->playersTimeWritten[$playerName] = $this->playersTimeWritten[$playerName]->add(
-                new \DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
+                new DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
             );
             $this->playersLastWritten[$playerName] = $message;
-        } catch(\Exception $exception) {
+        } catch(Exception $exception) {
             return false;
         }
 

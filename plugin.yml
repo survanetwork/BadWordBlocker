@@ -1,8 +1,26 @@
 name: BadWordBlocker
 main: surva\badwordblocker\BadWordBlocker
-version: 1.2.7
+version: 1.2.8
 api: 3.0.0
 
 author: survanetwork
 description: A chat filter which can block certain things
 website: https://github.com/survanetwork/BadWordBlocker
+
+permissions:
+  badwordblocker.bypass:
+    description: "Bypass the chat filters of BadWordBlocker"
+    default: op
+    children:
+      badwordblocker.bypass.swear:
+        description: "Bypass blocking swear words in the chat"
+        default: op
+      badwordblocker.bypass.same:
+        description: "Allows the write the same thing twice"
+        default: op
+      badwordblocker.bypass.spam:
+        description: "Bypasses the spam protection so you can write as fast as you like"
+        default: op
+      badwordblocker.bypass.caps:
+        description: "Bypasses the caps protection so you can write in caps"
+        default: op
