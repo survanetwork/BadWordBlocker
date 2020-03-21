@@ -58,7 +58,7 @@ class BadWordBlocker extends PluginBase {
         }
 
         if(!$player->hasPermission("badwordblocker.bypass.swear")) {
-            if($this->contains($message, $this->getBlockedWords())) {
+            if($this->contains($message, $this->blockedWords)) {
                 $player->sendMessage($this->getMessage("blocked.message"));
 
                 return false;
@@ -150,7 +150,7 @@ class BadWordBlocker extends PluginBase {
      * @return string
      */
     public function getMessage(string $key, array $replaces = array()): string {
-        if($rawMessage = $this->getMessages()->getNested($key)) {
+        if($rawMessage = $this->messages->getNested($key)) {
             if(is_array($replaces)) {
                 foreach($replaces as $replace => $value) {
                     $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
@@ -161,19 +161,5 @@ class BadWordBlocker extends PluginBase {
         }
 
         return $key;
-    }
-
-    /**
-     * @return array
-     */
-    public function getBlockedWords(): array {
-        return $this->blockedWords;
-    }
-
-    /**
-     * @return Config
-     */
-    public function getMessages(): Config {
-        return $this->messages;
     }
 }

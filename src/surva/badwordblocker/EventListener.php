@@ -33,7 +33,7 @@ class EventListener implements Listener {
 
         if(preg_match("/^\/tell (.*) (.*)/", $message, $result) === 1) {
             if(count($result) === 3) {
-                if(!$this->getBadWordBlocker()->checkMessage($player, $result[2])) {
+                if(!$this->badWordBlocker->checkMessage($player, $result[2])) {
                     $event->setCancelled();
                 }
             }
@@ -49,15 +49,8 @@ class EventListener implements Listener {
         $player = $event->getPlayer();
         $message = $event->getMessage();
 
-        if(!$this->getBadWordBlocker()->checkMessage($player, $message)) {
+        if(!$this->badWordBlocker->checkMessage($player, $message)) {
             $event->setCancelled();
         }
-    }
-
-    /**
-     * @return BadWordBlocker
-     */
-    public function getBadWordBlocker(): BadWordBlocker {
-        return $this->badWordBlocker;
     }
 }
