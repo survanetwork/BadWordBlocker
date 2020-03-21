@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jarne
- * Date: 06.10.16
- * Time: 18:05
+ * BadWordBlocker | event listener
  */
 
 namespace surva\badwordblocker;
@@ -16,11 +13,18 @@ class EventListener implements Listener {
     /* @var BadWordBlocker */
     private $badWordBlocker;
 
+    /**
+     * EventListener constructor
+     *
+     * @param BadWordBlocker $badWordBlocker
+     */
     public function __construct(BadWordBlocker $badWordBlocker) {
         $this->badWordBlocker = $badWordBlocker;
     }
 
     /**
+     * Cancel the tell command if the message doesn't pass the check
+     *
      * @param PlayerCommandPreprocessEvent $event
      */
     public function onPlayerCommandPreprocess(PlayerCommandPreprocessEvent $event): void {
@@ -37,6 +41,8 @@ class EventListener implements Listener {
     }
 
     /**
+     * Cancel a message if it doesn't pass the check
+     *
      * @param PlayerChatEvent $event
      */
     public function onPlayerChat(PlayerChatEvent $event): void {

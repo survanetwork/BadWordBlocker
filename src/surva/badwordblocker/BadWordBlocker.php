@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jarne
- * Date: 06.10.16
- * Time: 18:05
+ * BadWordBlocker | plugin main class
  */
 
 namespace surva\badwordblocker;
@@ -28,9 +25,11 @@ class BadWordBlocker extends PluginBase {
     /* @var array */
     private $playersLastWritten;
 
-    public function onEnable() {
+    /**
+     * Plugin has been enabled, initial setup
+     */
+    public function onEnable(): void {
         $this->saveDefaultConfig();
-        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 
         $this->messages = new Config(
             $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
@@ -40,6 +39,8 @@ class BadWordBlocker extends PluginBase {
 
         $this->playersTimeWritten = array();
         $this->playersLastWritten = array();
+
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
 
     /**
