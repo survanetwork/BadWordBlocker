@@ -1,0 +1,16 @@
+#  ____            ___        __            _ ____  _            _
+# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
+# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
+# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
+# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
+#
+# (C) 2018 by surva network | https://github.com/survanetwork
+
+# Indonesian language by @Kygekraqmak (GitHub)
+
+# Block messages
+blocked:
+  message: "§ePesan Anda telah §cdiblokir §eoleh BadWordBlocker."
+  lastwritten: "§cMohon ketik yang lain."
+  timewritten: "§cMohon jangan ketik terlalu cepat."
+  caps: "§cMohon matikan huruf besar."
