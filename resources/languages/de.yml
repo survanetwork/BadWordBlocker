@@ -14,3 +14,6 @@ blocked:
   lastwritten: "§cBitte schreibe etwas anderes."
   timewritten: "§cBitte schreibe nicht so schnell."
   caps: "§cBitte schreibe nicht alles in Großbuchstaben."
+
+# Kick message
+kick: "§eDu wurdest von BadWordBlocker §cgekickt§e."

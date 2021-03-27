@@ -14,3 +14,6 @@ blocked:
   lastwritten: "§cPlease write something else."
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."
+
+# Kick message
+kick: "§eYou've been §ckicked §eby BadWordBlocker."

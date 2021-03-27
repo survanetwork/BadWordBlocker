@@ -25,6 +25,9 @@ class BadWordBlocker extends PluginBase {
     /* @var array */
     private $playersLastWritten;
 
+    /* @var array */
+    private $playersViolations;
+
     /**
      * Plugin has been enabled, initial setup
      */
@@ -39,6 +42,7 @@ class BadWordBlocker extends PluginBase {
 
         $this->playersTimeWritten = array();
         $this->playersLastWritten = array();
+        $this->playersViolations = array();
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
@@ -60,6 +64,7 @@ class BadWordBlocker extends PluginBase {
         if(!$player->hasPermission("badwordblocker.bypass.swear")) {
             if($this->contains($message, $this->blockedWords)) {
                 $player->sendMessage($this->getMessage("blocked.message"));
+                $this->handleViolation($player);
 
                 return false;
             }
@@ -69,6 +74,7 @@ class BadWordBlocker extends PluginBase {
             if(isset($this->playersLastWritten[$playerName])) {
                 if($this->playersLastWritten[$playerName] === $message) {
                     $player->sendMessage($this->getMessage("blocked.lastwritten"));
+                    $this->handleViolation($player);
 
                     return false;
                 }
@@ -79,6 +85,7 @@ class BadWordBlocker extends PluginBase {
             if(isset($this->playersTimeWritten[$playerName])) {
                 if($this->playersTimeWritten[$playerName] > new DateTime()) {
                     $player->sendMessage($this->getMessage("blocked.timewritten"));
+                    $this->handleViolation($player);
 
                     return false;
                 }
@@ -95,6 +102,7 @@ class BadWordBlocker extends PluginBase {
                         $message
                     ) / $messageLength) >= $uppercasePercentage) {
                 $player->sendMessage($this->getMessage("blocked.caps"));
+                $this->handleViolation($player);
 
                 return false;
             }
@@ -111,6 +119,37 @@ class BadWordBlocker extends PluginBase {
         }
 
         return true;
+    }
+
+    /**
+     * Handle the occurrence of a chat block event, e.g. kick or ban the player if configured
+     *
+     * @param \pocketmine\Player $player
+     */
+    private function handleViolation(Player $player): void {
+        $playerName = $player->getName();
+
+        if(!isset($this->playersViolations[$playerName])) {
+            $this->playersViolations[$playerName] = 0;
+        }
+
+        $this->playersViolations[$playerName]++;
+
+        $violKick = $this->getConfig()->getNested("violations.kick", 0);
+        $violBan = $this->getConfig()->getNested("violations.ban", 0);
+        $resetAfterKick = $this->getConfig()->getNested("violations.resetafterkick", true);
+
+        if($this->playersViolations[$playerName] === $violKick) {
+            $player->kick($this->getMessage("kick"));
+
+            if($resetAfterKick) {
+                $this->playersViolations[$playerName] = 0;
+            }
+        } elseif($this->playersViolations[$playerName] === $violBan) {
+            $player->setBanned(true);
+
+            $this->playersViolations[$playerName] = 0;
+        }
     }
 
     /**
