@@ -1,11 +1,11 @@
 name: BadWordBlocker
 main: surva\badwordblocker\BadWordBlocker
-version: 1.2.10
+version: 1.2.11
 api: 3.0.0
 
 author: survanetwork
 description: A chat filter which can block certain things
-website: https://plugins.surva.network/#badwordblocker
+website: https://plugins.surva.net/#badwordblocker
 
 permissions:
   badwordblocker.bypass:
