@@ -76,6 +76,13 @@ uppercasepercentage: 0.75
 
 # Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI, OK, etc.)
 minimumchars: 3
+
+# After how many violations against the chat filter, a player should be kicked/banned - set to 0 to disable
+# Violations are reset after a server restart
+violations:
+  kick: 0
+  ban: 0
+  resetafterkick: true # reset violations after kick (this disables banning if kick-count is lower)
 ```
 
 ## 🙋‍ Contribution
