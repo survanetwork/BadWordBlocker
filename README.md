@@ -56,7 +56,7 @@ All settings can be changed in the `config.yml`-file, there are no commands:
 
 ```yaml
 # Language of the plugin messages
-# Possible options are: en (English), de (German), fr (French), ru (Russian), tr (Turkish)
+# Possible options are: en (English), de (German), fr (French), ru (Russian), tr (Turkish), id (Indonesian)
 language: "en"
 
 # List of the blocked words
@@ -67,6 +67,9 @@ badwords:
 
 # Ignore spaces in messages when checking for swear words / spam
 ignorespaces: true
+
+# Show the player which word has been blocked
+showblocked: false
 
 # Minimum time between chat messages in seconds
 waitingtime: 2

@@ -62,8 +62,15 @@ class BadWordBlocker extends PluginBase {
         }
 
         if(!$player->hasPermission("badwordblocker.bypass.swear")) {
-            if($this->contains($message, $this->blockedWords)) {
-                $player->sendMessage($this->getMessage("blocked.message"));
+            if(($blocked = $this->contains($message, $this->blockedWords)) !== null) {
+                if($this->getConfig()->get("showblocked", false) === true) {
+                    $player->sendMessage($this->getMessage("blocked.messagewithblocked", array(
+                        "blocked" => $blocked
+                    )));
+                } else {
+                    $player->sendMessage($this->getMessage("blocked.message"));
+                }
+
                 $this->handleViolation($player);
 
                 return false;
@@ -153,20 +160,21 @@ class BadWordBlocker extends PluginBase {
     }
 
     /**
-     * Check if a string contains a specific string from an array
+     * Check if a string contains a specific string from an array and return it
      *
-     * @param $string
+     * @param string $string
      * @param array $contains
-     * @return bool
+     *
+     * @return string|null
      */
-    public function contains($string, array $contains): bool {
+    private function contains(string $string, array $contains): ?string {
         foreach($contains as $contain) {
             if(strpos(strtolower($string), $contain) !== false) {
-                return true;
+                return $contain;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -175,7 +183,7 @@ class BadWordBlocker extends PluginBase {
      * @param string $string
      * @return int
      */
-    public function countUppercaseChars(string $string): int {
+    private function countUppercaseChars(string $string): int {
         preg_match_all("/[A-Z]/", $string, $matches);
 
         return count($matches[0]);

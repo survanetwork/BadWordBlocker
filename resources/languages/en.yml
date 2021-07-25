@@ -11,6 +11,7 @@
 # Block messages
 blocked:
   message: "§eYour message has been §cblocked §eby BadWordBlocker."
+  messagewithblocked: "§eYour message has been §cblocked §eby BadWordBlocker because of the word §8{blocked}§e."
   lastwritten: "§cPlease write something else."
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."

@@ -19,6 +19,9 @@ badwords:
 # Ignore spaces in messages when checking for swear words / spam
 ignorespaces: true
 
+# Show the player which word has been blocked
+showblocked: false
+
 # Minimum time between chat messages in seconds
 waitingtime: 2
 
