@@ -31,12 +31,32 @@ class EventListener implements Listener {
         $player = $event->getPlayer();
         $message = $event->getMessage();
 
-        if(preg_match("/^\/tell (.*) (.*)/", $message, $result) === 1) {
-            if(count($result) === 3) {
-                if(!$this->badWordBlocker->checkMessage($player, $result[2])) {
-                    $event->setCancelled();
-                }
-            }
+        $args = explode(" ", $message);
+
+        if($args === false) {
+            return;
+        }
+
+        if(count($args) < 2) {
+            return;
+        }
+
+        $command = array_shift($args);
+
+        switch($command) {
+            case "/tell":
+                array_shift($args);
+                break;
+            case "/me":
+                break;
+            default:
+                return;
+        }
+
+        $realMessage = implode(" ", $args);
+
+        if(!$this->badWordBlocker->checkMessage($player, $realMessage)) {
+            $event->setCancelled();
         }
     }
 
