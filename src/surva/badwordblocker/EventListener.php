@@ -49,6 +49,8 @@ class EventListener implements Listener
 
         switch ($command) {
             case "/tell":
+            case "/w":
+            case "/msg":
                 array_shift($args);
                 break;
             case "/me":
