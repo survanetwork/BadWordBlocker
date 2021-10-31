@@ -8,6 +8,7 @@ namespace surva\badwordblocker;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
+use pocketmine\event\CancellableTrait;
 
 class EventListener implements Listener
 {
@@ -77,7 +78,7 @@ class EventListener implements Listener
         $message = $event->getMessage();
 
         if (!$this->badWordBlocker->checkMessage($player, $message)) {
-            $event->setCancelled();
+            $event->isCancelled();
         }
     }
 
