@@ -8,7 +8,7 @@ namespace surva\badwordblocker;
 use DateInterval;
 use DateTime;
 use Exception;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 
