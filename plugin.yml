@@ -23,4 +23,3 @@ permissions:
   badwordblocker.bypass.caps:
     description: "Bypasses the caps protection so you can write in caps"
     default: op
-
