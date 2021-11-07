@@ -12,14 +12,8 @@ use pocketmine\event\player\PlayerCommandPreprocessEvent;
 class EventListener implements Listener
 {
 
-    /* @var BadWordBlocker */
-    private $badWordBlocker;
+    private BadWordBlocker $badWordBlocker;
 
-    /**
-     * EventListener constructor
-     *
-     * @param  BadWordBlocker  $badWordBlocker
-     */
     public function __construct(BadWordBlocker $badWordBlocker)
     {
         $this->badWordBlocker = $badWordBlocker;

@@ -15,20 +15,18 @@ use pocketmine\utils\Config;
 class BadWordBlocker extends PluginBase
 {
 
-    /* @var Config */
-    private $messages;
+    /**
+     * @var \pocketmine\utils\Config selected language config
+     */
+    private Config $messages;
 
-    /* @var array */
-    private $blockedWords;
+    private array $blockedWords;
 
-    /* @var array */
-    private $playersTimeWritten;
+    private array $playersTimeWritten;
 
-    /* @var array */
-    private $playersLastWritten;
+    private array $playersLastWritten;
 
-    /* @var array */
-    private $playersViolations;
+    private array $playersViolations;
 
     /**
      * Plugin has been enabled, initial setup
@@ -53,7 +51,7 @@ class BadWordBlocker extends PluginBase
     /**
      * Check the message of a player on the different aspects (true = alright; false = found something)
      *
-     * @param  Player  $player
+     * @param  \pocketmine\player\Player  $player
      * @param  string  $message
      *
      * @return bool
@@ -69,14 +67,7 @@ class BadWordBlocker extends PluginBase
         if (!$player->hasPermission("badwordblocker.bypass.swear")) {
             if (($blocked = $this->contains($message, $this->blockedWords)) !== null) {
                 if ($this->getConfig()->get("showblocked", false) === true) {
-                    $player->sendMessage(
-                      $this->getMessage(
-                        "blocked.messagewithblocked",
-                        [
-                          "blocked" => $blocked,
-                        ]
-                      )
-                    );
+                    $player->sendMessage($this->getMessage("blocked.messagewithblocked", ["blocked" => $blocked]));
                 } else {
                     $player->sendMessage($this->getMessage("blocked.message"));
                 }
@@ -142,7 +133,7 @@ class BadWordBlocker extends PluginBase
     /**
      * Handle the occurrence of a chat block event, e.g. kick or ban the player if configured
      *
-     * @param  \pocketmine\Player  $player
+     * @param  \pocketmine\player\Player  $player
      */
     private function handleViolation(Player $player): void
     {
@@ -165,7 +156,7 @@ class BadWordBlocker extends PluginBase
                 $this->playersViolations[$playerName] = 0;
             }
         } elseif ($this->playersViolations[$playerName] === $violBan) {
-            $player->setBanned(true);
+            //$player->setBanned(true); // TODO: has the ban function been renamed or removed?
 
             $this->playersViolations[$playerName] = 0;
         }
@@ -182,7 +173,7 @@ class BadWordBlocker extends PluginBase
     private function contains(string $string, array $contains): ?string
     {
         foreach ($contains as $contain) {
-            if (strpos(strtolower($string), $contain) !== false) {
+            if (str_contains(strtolower($string), $contain)) {
                 return $contain;
             }
         }
