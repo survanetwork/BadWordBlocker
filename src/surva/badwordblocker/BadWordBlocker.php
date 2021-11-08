@@ -16,6 +16,11 @@ class BadWordBlocker extends PluginBase
 {
 
     /**
+     * @var \pocketmine\utils\Config default language config
+     */
+    private Config $defaultMessages;
+
+    /**
      * @var \pocketmine\utils\Config selected language config
      */
     private Config $messages;
@@ -35,7 +40,8 @@ class BadWordBlocker extends PluginBase
     {
         $this->saveDefaultConfig();
 
-        $this->messages = new Config(
+        $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
+        $this->messages        = new Config(
           $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
         );
 
@@ -205,17 +211,19 @@ class BadWordBlocker extends PluginBase
      */
     public function getMessage(string $key, array $replaces = []): string
     {
-        if ($rawMessage = $this->messages->getNested($key)) {
-            if (is_array($replaces)) {
-                foreach ($replaces as $replace => $value) {
-                    $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
-                }
-            }
-
-            return $rawMessage;
+        if (($rawMessage = $this->messages->getNested($key)) === null) {
+            $rawMessage = $this->defaultMessages->getNested($key);
         }
 
-        return $key;
+        if ($rawMessage === null) {
+            return $key;
+        }
+
+        foreach ($replaces as $replace => $value) {
+            $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
+        }
+
+        return $rawMessage;
     }
 
 }
