@@ -8,27 +8,30 @@ namespace surva\badwordblocker;
 use DateInterval;
 use DateTime;
 use Exception;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 
 class BadWordBlocker extends PluginBase
 {
 
-    /* @var Config */
-    private $messages;
+    /**
+     * @var \pocketmine\utils\Config default language config
+     */
+    private Config $defaultMessages;
 
-    /* @var array */
-    private $blockedWords;
+    /**
+     * @var \pocketmine\utils\Config selected language config
+     */
+    private Config $messages;
 
-    /* @var array */
-    private $playersTimeWritten;
+    private array $blockedWords;
 
-    /* @var array */
-    private $playersLastWritten;
+    private array $playersTimeWritten;
 
-    /* @var array */
-    private $playersViolations;
+    private array $playersLastWritten;
+
+    private array $playersViolations;
 
     /**
      * Plugin has been enabled, initial setup
@@ -37,7 +40,8 @@ class BadWordBlocker extends PluginBase
     {
         $this->saveDefaultConfig();
 
-        $this->messages = new Config(
+        $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
+        $this->messages        = new Config(
           $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
         );
 
@@ -53,7 +57,7 @@ class BadWordBlocker extends PluginBase
     /**
      * Check the message of a player on the different aspects (true = alright; false = found something)
      *
-     * @param  Player  $player
+     * @param  \pocketmine\player\Player  $player
      * @param  string  $message
      *
      * @return bool
@@ -69,14 +73,7 @@ class BadWordBlocker extends PluginBase
         if (!$player->hasPermission("badwordblocker.bypass.swear")) {
             if (($blocked = $this->contains($message, $this->blockedWords)) !== null) {
                 if ($this->getConfig()->get("showblocked", false) === true) {
-                    $player->sendMessage(
-                      $this->getMessage(
-                        "blocked.messagewithblocked",
-                        [
-                          "blocked" => $blocked,
-                        ]
-                      )
-                    );
+                    $player->sendMessage($this->getMessage("blocked.messagewithblocked", ["blocked" => $blocked]));
                 } else {
                     $player->sendMessage($this->getMessage("blocked.message"));
                 }
@@ -142,7 +139,7 @@ class BadWordBlocker extends PluginBase
     /**
      * Handle the occurrence of a chat block event, e.g. kick or ban the player if configured
      *
-     * @param  \pocketmine\Player  $player
+     * @param  \pocketmine\player\Player  $player
      */
     private function handleViolation(Player $player): void
     {
@@ -165,7 +162,7 @@ class BadWordBlocker extends PluginBase
                 $this->playersViolations[$playerName] = 0;
             }
         } elseif ($this->playersViolations[$playerName] === $violBan) {
-            $player->setBanned(true);
+            //$player->setBanned(true); // TODO: has the ban function been renamed or removed?
 
             $this->playersViolations[$playerName] = 0;
         }
@@ -182,7 +179,7 @@ class BadWordBlocker extends PluginBase
     private function contains(string $string, array $contains): ?string
     {
         foreach ($contains as $contain) {
-            if (strpos(strtolower($string), $contain) !== false) {
+            if (str_contains(strtolower($string), $contain)) {
                 return $contain;
             }
         }
@@ -214,17 +211,19 @@ class BadWordBlocker extends PluginBase
      */
     public function getMessage(string $key, array $replaces = []): string
     {
-        if ($rawMessage = $this->messages->getNested($key)) {
-            if (is_array($replaces)) {
-                foreach ($replaces as $replace => $value) {
-                    $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
-                }
-            }
-
-            return $rawMessage;
+        if (($rawMessage = $this->messages->getNested($key)) === null) {
+            $rawMessage = $this->defaultMessages->getNested($key);
         }
 
-        return $key;
+        if ($rawMessage === null) {
+            return $key;
+        }
+
+        foreach ($replaces as $replace => $value) {
+            $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
+        }
+
+        return $rawMessage;
     }
 
 }
