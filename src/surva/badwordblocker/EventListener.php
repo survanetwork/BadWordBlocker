@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BadWordBlocker | event listener
  */
@@ -11,7 +12,6 @@ use pocketmine\event\player\PlayerCommandPreprocessEvent;
 
 class EventListener implements Listener
 {
-
     private BadWordBlocker $badWordBlocker;
 
     public function __construct(BadWordBlocker $badWordBlocker)
@@ -74,5 +74,4 @@ class EventListener implements Listener
             $event->cancel();
         }
     }
-
 }

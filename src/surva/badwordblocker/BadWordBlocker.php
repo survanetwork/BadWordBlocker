@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BadWordBlocker | plugin main class
  */
@@ -14,7 +15,6 @@ use pocketmine\utils\Config;
 
 class BadWordBlocker extends PluginBase
 {
-
     /**
      * @var \pocketmine\utils\Config default language config
      */
@@ -42,7 +42,7 @@ class BadWordBlocker extends PluginBase
 
         $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
         $this->messages        = new Config(
-          $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
+            $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
         );
 
         $this->blockedWords = $this->getConfig()->get("badwords", ["fuck", "shit", "bitch"]);
@@ -112,8 +112,9 @@ class BadWordBlocker extends PluginBase
 
             $messageLength = strlen($message);
 
-            if ($messageLength > $minimumChars and ($this->countUppercaseChars(
-                  $message
+            if (
+                $messageLength > $minimumChars and ($this->countUppercaseChars(
+                    $message
                 ) / $messageLength) >= $uppercasePercentage
             ) {
                 $player->sendMessage($this->getMessage("blocked.caps"));
@@ -126,7 +127,7 @@ class BadWordBlocker extends PluginBase
         try {
             $this->playersTimeWritten[$playerName] = new DateTime();
             $this->playersTimeWritten[$playerName] = $this->playersTimeWritten[$playerName]->add(
-              new DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
+                new DateInterval("PT" . $this->getConfig()->get("waitingtime", 2) . "S")
             );
             $this->playersLastWritten[$playerName] = $message;
         } catch (Exception $exception) {
@@ -225,5 +226,4 @@ class BadWordBlocker extends PluginBase
 
         return $rawMessage;
     }
-
 }
