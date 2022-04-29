@@ -12,5 +12,8 @@
 blocked:
   message: "§ePesan Anda telah §cdiblokir §eoleh BadWordBlocker."
   lastwritten: "§cMohon ketik yang lain."
-  timewritten: "§cMohon jangan ketik terlalu cepat."
+  timewritten: "§cMohon jangan mengetik terlalu cepat."
   caps: "§cMohon matikan huruf besar."
+
+# Kick message
+kick: "§eAnda telah §cdikeluarkan §eoleh BadWordBlocker."
