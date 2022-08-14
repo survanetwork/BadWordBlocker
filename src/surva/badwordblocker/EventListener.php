@@ -31,10 +31,6 @@ class EventListener implements Listener
 
         $args = explode(" ", $message);
 
-        if ($args === false) {
-            return;
-        }
-
         if (count($args) < 2) {
             return;
         }
