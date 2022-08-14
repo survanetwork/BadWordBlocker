@@ -98,7 +98,7 @@ Feel free to contribute if you have ideas or found an issue.
 You can:
 - [open an issue](https://github.com/survanetwork/BadWordBlocker/issues) (problems, bugs or feature requests)
 - [create a pull request](https://github.com/survanetwork/BadWordBlocker/pulls) (code contributions like fixed bugs or added features)
-- [help translating the plugin](https://github.com/survanetwork/BadWordBlocker/tree/master/resources/languages) (create a new language file or correct an existing one)
+- [help translating the plugin](https://www.transifex.com/surva/badwordblocker) (help us to translate this plugin into your language on Transifex platform)
 
 Please read our **[Contribution Guidelines](CONTRIBUTING.md)** before creating an issue or submitting a pull request.
 
