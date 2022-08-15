@@ -1,6 +1,6 @@
 name: BadWordBlocker
 main: surva\badwordblocker\BadWordBlocker
-version: 1.2.13
+version: 1.2.14
 api: 4.0.0
 
 author: survanetwork
