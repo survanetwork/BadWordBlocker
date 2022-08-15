@@ -163,7 +163,8 @@ class BadWordBlocker extends PluginBase
                 $this->playersViolations[$playerName] = 0;
             }
         } elseif ($this->playersViolations[$playerName] === $violBan) {
-            //$player->setBanned(true); // TODO: has the ban function been renamed or removed?
+            $this->getServer()->getNameBans()->addBan($playerName, $this->getMessage("ban"));
+            $player->kick($this->getMessage("ban"));
 
             $this->playersViolations[$playerName] = 0;
         }
