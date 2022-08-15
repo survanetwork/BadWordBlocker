@@ -8,7 +8,8 @@ namespace surva\badwordblocker;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
-use pocketmine\event\player\PlayerCommandPreprocessEvent;
+use pocketmine\event\server\CommandEvent;
+use pocketmine\player\Player;
 
 class EventListener implements Listener
 {
@@ -22,14 +23,20 @@ class EventListener implements Listener
     /**
      * Cancel the tell command if the message doesn't pass the check
      *
-     * @param  PlayerCommandPreprocessEvent  $event
+     * @param  \pocketmine\event\server\CommandEvent  $event
+     *
+     * @return void
      */
-    public function onPlayerCommandPreprocess(PlayerCommandPreprocessEvent $event): void
+    public function onCommand(CommandEvent $event): void
     {
-        $player  = $event->getPlayer();
-        $message = $event->getMessage();
+        $sender = $event->getSender();
+        $command = $event->getCommand();
 
-        $args = explode(" ", $message);
+        if (!($sender instanceof Player)) {
+            return;
+        }
+
+        $args = explode(" ", $command);
 
         if (count($args) < 2) {
             return;
@@ -38,12 +45,12 @@ class EventListener implements Listener
         $command = array_shift($args);
 
         switch ($command) {
-            case "/tell":
-            case "/w":
-            case "/msg":
+            case "tell":
+            case "w":
+            case "msg":
                 array_shift($args);
                 break;
-            case "/me":
+            case "me":
                 break;
             default:
                 return;
@@ -51,7 +58,7 @@ class EventListener implements Listener
 
         $realMessage = implode(" ", $args);
 
-        if (!$this->badWordBlocker->checkMessage($player, $realMessage)) {
+        if (!$this->badWordBlocker->checkMessage($sender, $realMessage)) {
             $event->cancel();
         }
     }
