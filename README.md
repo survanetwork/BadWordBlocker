@@ -43,7 +43,9 @@
 [• License](#%EF%B8%8F-license)
 
 ## 📙 Description
-BadWorkBlocker is a feature rich chat filter suitable for huge servers to keep the chat clean from swear words and spam. It's highly configurable for nearly every needs.
+BadWorkBlocker is a chat filter suitable for every server to keep the chat clean from swear words and spam.
+It can prevent swear words, sending the same message twice, sending too many messages and using caps lock.
+It's highly configurable for nearly every needs.
 
 ## 🎁 Features
 The main features of this plugin are:
