@@ -6,7 +6,7 @@
 #
 # (C) 2018 by surva network | https://github.com/survanetwork
 
-# Indonesian language by @Kygekraqmak (GitHub)
+# Indonesian language by @Kygekraqmak (GitHub) and @BlackD14 (Github)
 
 # Block messages
 blocked:
@@ -17,3 +17,6 @@ blocked:
 
 # Kick message
 kick: "§eAnda telah §cdikeluarkan §eoleh BadWordBlocker."
+
+# Ban message
+ban: "§eAnda telah §cdilarang §eoleh BadWordBlocker."
