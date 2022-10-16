@@ -4,7 +4,7 @@
  * BadWordBlocker | translated messages utils
  */
 
-namespace surva\badwordblocker\utils;
+namespace surva\badwordblocker\util;
 
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;

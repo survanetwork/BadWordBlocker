@@ -14,7 +14,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
-use surva\badwordblocker\utils\Messages;
+use surva\badwordblocker\util\Messages;
 
 class BadWordBlocker extends PluginBase
 {
