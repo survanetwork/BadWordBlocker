@@ -8,10 +8,13 @@ namespace surva\badwordblocker;
 
 use DateInterval;
 use DateTime;
+use DirectoryIterator;
 use Exception;
+use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use surva\badwordblocker\utils\Messages;
 
 class BadWordBlocker extends PluginBase
 {
@@ -21,16 +24,13 @@ class BadWordBlocker extends PluginBase
     private Config $defaultMessages;
 
     /**
-     * @var \pocketmine\utils\Config selected language config
+     * @var array available language configs
      */
-    private Config $messages;
+    private array $translationMessages;
 
     private array $blockedWords;
-
     private array $playersTimeWritten;
-
     private array $playersLastWritten;
-
     private array $playersViolations;
 
     /**
@@ -41,9 +41,7 @@ class BadWordBlocker extends PluginBase
         $this->saveDefaultConfig();
 
         $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
-        $this->messages        = new Config(
-            $this->getFile() . "resources/languages/" . $this->getConfig()->get("language", "en") . ".yml"
-        );
+        $this->loadLanguageFiles();
 
         $this->blockedWords = $this->getConfig()->get("badwords", ["fuck", "shit", "bitch"]);
 
@@ -70,12 +68,16 @@ class BadWordBlocker extends PluginBase
             $message = str_replace(" ", "", $message);
         }
 
+        $translMessages = new Messages($this, $player);
+
         if (!$player->hasPermission("badwordblocker.bypass.swear")) {
             if (($blocked = $this->contains($message, $this->blockedWords)) !== null) {
                 if ($this->getConfig()->get("showblocked", false) === true) {
-                    $player->sendMessage($this->getMessage("blocked.messagewithblocked", ["blocked" => $blocked]));
+                    $player->sendMessage(
+                        $translMessages->getMessage("blocked.messagewithblocked", ["blocked" => $blocked])
+                    );
                 } else {
-                    $player->sendMessage($this->getMessage("blocked.message"));
+                    $player->sendMessage($translMessages->getMessage("blocked.message"));
                 }
 
                 $this->handleViolation($player);
@@ -87,7 +89,7 @@ class BadWordBlocker extends PluginBase
         if (!$player->hasPermission("badwordblocker.bypass.same")) {
             if (isset($this->playersLastWritten[$playerName])) {
                 if ($this->playersLastWritten[$playerName] === $message) {
-                    $player->sendMessage($this->getMessage("blocked.lastwritten"));
+                    $player->sendMessage($translMessages->getMessage("blocked.lastwritten"));
                     $this->handleViolation($player);
 
                     return false;
@@ -98,7 +100,7 @@ class BadWordBlocker extends PluginBase
         if (!$player->hasPermission("badwordblocker.bypass.spam")) {
             if (isset($this->playersTimeWritten[$playerName])) {
                 if ($this->playersTimeWritten[$playerName] > new DateTime()) {
-                    $player->sendMessage($this->getMessage("blocked.timewritten"));
+                    $player->sendMessage($translMessages->getMessage("blocked.timewritten"));
                     $this->handleViolation($player);
 
                     return false;
@@ -117,7 +119,7 @@ class BadWordBlocker extends PluginBase
                     $message
                 ) / $messageLength) >= $uppercasePercentage
             ) {
-                $player->sendMessage($this->getMessage("blocked.caps"));
+                $player->sendMessage($translMessages->getMessage("blocked.caps"));
                 $this->handleViolation($player);
 
                 return false;
@@ -156,15 +158,17 @@ class BadWordBlocker extends PluginBase
         $violBan        = $this->getConfig()->getNested("violations.ban", 0);
         $resetAfterKick = $this->getConfig()->getNested("violations.resetafterkick", true);
 
+        $translMessages = new Messages($this, $player);
+
         if ($this->playersViolations[$playerName] === $violKick) {
-            $player->kick($this->getMessage("kick"));
+            $player->kick($translMessages->getMessage("kick"));
 
             if ($resetAfterKick) {
                 $this->playersViolations[$playerName] = 0;
             }
         } elseif ($this->playersViolations[$playerName] === $violBan) {
-            $this->getServer()->getNameBans()->addBan($playerName, $this->getMessage("ban"));
-            $player->kick($this->getMessage("ban"));
+            $this->getServer()->getNameBans()->addBan($playerName, $translMessages->getMessage("ban"));
+            $player->kick($translMessages->getMessage("ban"));
 
             $this->playersViolations[$playerName] = 0;
         }
@@ -204,29 +208,66 @@ class BadWordBlocker extends PluginBase
     }
 
     /**
-     * Get a translated message
+     * Shorthand to send a translated message to a command sender
      *
+     * @param  \pocketmine\command\CommandSender  $sender
      * @param  string  $key
      * @param  array  $replaces
      *
-     * @return string
+     * @return void
      */
-    public function getMessage(string $key, array $replaces = []): string
+    public function sendMessage(CommandSender $sender, string $key, array $replaces = []): void
     {
-        $rawMessage = $this->messages->getNested($key);
+        $messages = new Messages($this, $sender);
 
-        if ($rawMessage === null || $rawMessage === "") {
-            $rawMessage = $this->defaultMessages->getNested($key);
+        $sender->sendMessage($messages->getMessage($key, $replaces));
+    }
+
+    /**
+     * Load all available language files
+     *
+     * @return void
+     */
+    private function loadLanguageFiles(): void
+    {
+        $languageFilesDir = $this->getFile() . "resources/languages/";
+
+        foreach (new DirectoryIterator($languageFilesDir) as $dirObj) {
+            if (!($dirObj instanceof DirectoryIterator)) {
+                continue;
+            }
+
+            if (!$dirObj->isFile() || !str_ends_with($dirObj->getFilename(), ".yml")) {
+                continue;
+            }
+
+            preg_match("/^[a-z][a-z]/", $dirObj->getFilename(), $fileNameRes);
+
+            if (!isset($fileNameRes[0])) {
+                continue;
+            }
+
+            $langId = $fileNameRes[0];
+
+            $this->translationMessages[$langId] = new Config(
+                $this->getFile() . "resources/languages/" . $langId . ".yml"
+            );
         }
+    }
 
-        if ($rawMessage === null) {
-            return $key;
-        }
+    /**
+     * @return array
+     */
+    public function getTranslationMessages(): array
+    {
+        return $this->translationMessages;
+    }
 
-        foreach ($replaces as $replace => $value) {
-            $rawMessage = str_replace("{" . $replace . "}", $value, $rawMessage);
-        }
-
-        return $rawMessage;
+    /**
+     * @return \pocketmine\utils\Config
+     */
+    public function getDefaultMessages(): Config
+    {
+        return $this->defaultMessages;
     }
 }
