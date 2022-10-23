@@ -90,7 +90,7 @@ violations:
   resetafterkick: true # reset violations after kick (this disables banning if kick-count is lower)
 ```
 
-[Read the full documentation 📖](https://plugins.surva.net/docs/BadWordBlocker) • [Ask questions on Discord 💬](https://discord.gg/t4Kg4j3829)
+[Read the full documentation 📖](https://plugin-docs.surva.net/badwordblocker) • [Ask questions on Discord 💬](https://discord.gg/t4Kg4j3829)
 
 ## 🙋‍ Contribution
 Feel free to contribute if you have ideas or found an issue.
