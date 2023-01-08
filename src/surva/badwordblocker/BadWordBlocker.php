@@ -161,14 +161,14 @@ class BadWordBlocker extends PluginBase
         $translMessages = new Messages($this, $player);
 
         if ($this->playersViolations[$playerName] === $violKick) {
-            $player->kick($translMessages->getMessage("kick"));
+            $player->kick($translMessages->getMessage("punishment.kick"));
 
             if ($resetAfterKick) {
                 $this->playersViolations[$playerName] = 0;
             }
         } elseif ($this->playersViolations[$playerName] === $violBan) {
-            $this->getServer()->getNameBans()->addBan($playerName, $translMessages->getMessage("ban"));
-            $player->kick($translMessages->getMessage("ban"));
+            $this->getServer()->getNameBans()->addBan($playerName, $translMessages->getMessage("punishment.ban"));
+            $player->kick($translMessages->getMessage("punishment.ban"));
 
             $this->playersViolations[$playerName] = 0;
         }

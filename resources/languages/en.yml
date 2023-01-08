@@ -14,8 +14,7 @@ blocked:
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."
 
-# Kick message
-kick: "§eYou've been §ckicked §eby BadWordBlocker."
-
-# Ban message
-ban: "§eYou've been §cbanned §eby BadWordBlocker."
+# Kick & ban messages
+punishment:
+  kick: "§eYou've been §ckicked §eby BadWordBlocker."
+  ban: "§eYou've been §cbanned §eby BadWordBlocker."
