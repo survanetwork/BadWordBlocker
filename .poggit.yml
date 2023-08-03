@@ -5,5 +5,3 @@ projects:
   BadWordBlocker:
     path: ""
     icon: "icon.png"
-    excludeFiles:
-      "/composer.json": ""
