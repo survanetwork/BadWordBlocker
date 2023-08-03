@@ -1,7 +1,7 @@
 {
     "name": "survanetwork/badwordblocker",
     "description": "A Chat Filter which can block certain things",
-    "version": "1.2.16",
+    "version": "1.2.17",
     "type": "project",
     "keywords": [
         "chat",
@@ -24,8 +24,8 @@
         "source": "https://github.com/survanetwork/BadWordBlocker"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.8",
-        "pocketmine/pocketmine-mp": "^4.9",
+        "phpstan/phpstan": "^1.10",
+        "pocketmine/pocketmine-mp": "^5.4",
         "squizlabs/php_codesniffer": "^3.7"
     },
     "scripts": {
