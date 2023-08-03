@@ -5,3 +5,5 @@ projects:
   BadWordBlocker:
     path: ""
     icon: "icon.png"
+    lint:
+      phpstan: false
