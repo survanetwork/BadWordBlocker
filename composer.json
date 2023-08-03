@@ -1,7 +1,7 @@
 {
     "name": "survanetwork/badwordblocker",
     "description": "A Chat Filter which can block certain things",
-    "version": "1.2.16",
+    "version": "1.2.17",
     "type": "project",
     "keywords": [
         "chat",
