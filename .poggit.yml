@@ -1,8 +1,9 @@
 branches:
 - master
-- pm4
 
 projects:
   BadWordBlocker:
     path: ""
     icon: "icon.png"
+    excludeFiles:
+      "/composer.json": ""
