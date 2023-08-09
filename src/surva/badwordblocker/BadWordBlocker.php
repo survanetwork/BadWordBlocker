@@ -35,6 +35,11 @@ class BadWordBlocker extends PluginBase
      */
     private array $availableListSources;
 
+    /**
+     * @var array players to which the bypassed message was already sent during this runtime
+     */
+    private array $bypassedMessageSent;
+
     private array $blockedWords;
     private array $playersTimeWritten;
     private array $playersLastWritten;
@@ -55,6 +60,7 @@ class BadWordBlocker extends PluginBase
 
         $this->loadConfig();
 
+        $this->bypassedMessageSent = [];
         $this->playersTimeWritten = [];
         $this->playersLastWritten = [];
         $this->playersViolations  = [];
@@ -110,60 +116,76 @@ class BadWordBlocker extends PluginBase
 
         $translMessages = new Messages($this, $player);
 
-        if (!$player->hasPermission("badwordblocker.bypass.swear")) {
-            if (($blocked = $this->contains($message, $this->blockedWords)) !== null) {
-                if ($this->getConfig()->get("showblocked", false) === true) {
-                    $player->sendMessage(
-                        $translMessages->getMessage("blocked.messagewithblocked", ["blocked" => $blocked])
-                    );
-                } else {
-                    $player->sendMessage($translMessages->getMessage("blocked.message"));
+        if (($blocked = $this->contains($message, $this->blockedWords)) !== null) {
+            if ($player->hasPermission("badwordblocker.bypass.swear")) {
+                $this->sendBypassedMessage($player);
+
+                return true;
+            }
+
+            if ($this->getConfig()->get("showblocked", false) === true) {
+                $player->sendMessage(
+                    $translMessages->getMessage("blocked.messagewithblocked", ["blocked" => $blocked])
+                );
+            } else {
+                $player->sendMessage($translMessages->getMessage("blocked.message"));
+            }
+
+            $this->handleViolation($player);
+
+            return false;
+        }
+
+        if (isset($this->playersLastWritten[$playerName])) {
+            if ($this->playersLastWritten[$playerName] === $message) {
+                if ($player->hasPermission("badwordblocker.bypass.same")) {
+                    $this->sendBypassedMessage($player);
+
+                    return true;
                 }
 
+                $player->sendMessage($translMessages->getMessage("blocked.lastwritten"));
                 $this->handleViolation($player);
 
                 return false;
             }
         }
 
-        if (!$player->hasPermission("badwordblocker.bypass.same")) {
-            if (isset($this->playersLastWritten[$playerName])) {
-                if ($this->playersLastWritten[$playerName] === $message) {
-                    $player->sendMessage($translMessages->getMessage("blocked.lastwritten"));
-                    $this->handleViolation($player);
+        if (isset($this->playersTimeWritten[$playerName])) {
+            if ($this->playersTimeWritten[$playerName] > new DateTime()) {
+                if ($player->hasPermission("badwordblocker.bypass.spam")) {
+                    $this->sendBypassedMessage($player);
 
-                    return false;
+                    return true;
                 }
+
+                $player->sendMessage($translMessages->getMessage("blocked.timewritten"));
+                $this->handleViolation($player);
+
+                return false;
             }
         }
 
-        if (!$player->hasPermission("badwordblocker.bypass.spam")) {
-            if (isset($this->playersTimeWritten[$playerName])) {
-                if ($this->playersTimeWritten[$playerName] > new DateTime()) {
-                    $player->sendMessage($translMessages->getMessage("blocked.timewritten"));
-                    $this->handleViolation($player);
+        $uppercasePercentage = $this->getConfig()->get("uppercasepercentage", 0.75);
+        $minimumChars        = $this->getConfig()->get("minimumchars", 3);
 
-                    return false;
-                }
-            }
-        }
+        $messageLength = strlen($message);
 
-        if (!$player->hasPermission("badwordblocker.bypass.caps")) {
-            $uppercasePercentage = $this->getConfig()->get("uppercasepercentage", 0.75);
-            $minimumChars        = $this->getConfig()->get("minimumchars", 3);
-
-            $messageLength = strlen($message);
-
-            if (
+        if (
                 $messageLength > $minimumChars and ($this->countUppercaseChars(
                     $message
                 ) / $messageLength) >= $uppercasePercentage
-            ) {
-                $player->sendMessage($translMessages->getMessage("blocked.caps"));
-                $this->handleViolation($player);
+        ) {
+            if ($player->hasPermission("badwordblocker.bypass.caps")) {
+                $this->sendBypassedMessage($player);
 
-                return false;
+                return true;
             }
+
+            $player->sendMessage($translMessages->getMessage("blocked.caps"));
+            $this->handleViolation($player);
+
+            return false;
         }
 
         try {
@@ -212,6 +234,29 @@ class BadWordBlocker extends PluginBase
 
             $this->playersViolations[$playerName] = 0;
         }
+    }
+
+    /**
+     * Send filter bypassed reminder to a player if not already sent during this session
+     *
+     * @param  \pocketmine\player\Player  $pl
+     *
+     * @return void
+     */
+    private function sendBypassedMessage(Player $pl): void
+    {
+        if ($this->getConfig()->get("send_bypassed_message", true) !== true) {
+            return;
+        }
+
+        $id = $pl->getId();
+
+        if (isset($this->bypassedMessageSent[$id])) {
+            return;
+        }
+
+        $this->sendMessage($pl, "filter_bypassed");
+        $this->bypassedMessageSent[$id] = true;
     }
 
     /**

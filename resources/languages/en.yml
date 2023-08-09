@@ -14,6 +14,9 @@ blocked:
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."
 
+# Bypassed message
+filter_bypassed: "The §eBadWordBlocker §rfilter was bypassed because of your permissions."
+
 # Kick & ban messages
 punishment:
   kick: "§eYou've been §ckicked §eby BadWordBlocker."
