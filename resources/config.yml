@@ -41,3 +41,6 @@ violations:
   kick: 0
   ban: 0
   resetafterkick: true # reset violations after kick (this disables banning if kick-count is lower)
+
+# Send a reminder message once per session if bypassing filters using ones permissions
+send_bypassed_message: true
