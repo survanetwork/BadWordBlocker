@@ -18,3 +18,19 @@ blocked:
 punishment:
   kick: "§eYou've been §ckicked §eby BadWordBlocker."
   ban: "§eYou've been §cbanned §eby BadWordBlocker."
+
+# Import workflow
+import:
+  form:
+    select:
+      title: "Select list to import"
+      description: "You can select from some ready-to-use profanity lists from the internet published under an open license to import."
+      dropdown: "Select a list"
+    confirm:
+      title: "Confirm list import"
+      description: "The list \"{name}\" will be imported. §6This will overwrite all existing words added to the config file."
+      license: "It is licensed under the {license} license. The sources for this list are available at {credits_url}."
+  success: "§aList §f{name} §awas imported successfully."
+  error_code:
+    web_request: "§cCould not import list from the internet data source, connection failed!"
+    config_save: "§cCouldn't save config file with imported list!"

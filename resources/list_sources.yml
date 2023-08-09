@@ -1,0 +1,11 @@
+sources:
+  - name: "dsojevic/profanity-list"
+    source_url: "https://raw.githubusercontent.com/dsojevic/profanity-list/main/en.txt"
+    format: "text"
+    license: "MIT"
+    credits_url: "https://github.com/dsojevic/profanity-list"
+  - name: "chucknorris-io/swear-words"
+    source_url: "https://raw.githubusercontent.com/chucknorris-io/swear-words/master/en"
+    format: "text"
+    license: "CC-BY-4.0"
+    credits_url: "https://github.com/chucknorris-io/swear-words"
