@@ -7,7 +7,16 @@ author: survanetwork
 description: A chat filter which can block certain things
 website: https://plugins.surva.net/#badwordblocker
 
+commands:
+  badwordblocker:
+    description: "BadWordBlocker plugin main command"
+    usage: "/badwordblocker <action>"
+    permission: badwordblocker.manage
+    aliases: ["bwb"]
 permissions:
+  badwordblocker.manage:
+    description: "Manage settings/administrative actions of the BadWordBlocker plugin"
+    default: op
   badwordblocker.bypass:
     description: "Bypass the chat filters of BadWordBlocker"
     default: op
