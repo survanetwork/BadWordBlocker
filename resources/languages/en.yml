@@ -28,7 +28,7 @@ import:
       dropdown: "Select a list"
     confirm:
       title: "Confirm list import"
-      description: "The list \"{name}\" will be imported."
+      description: "The list \"{name}\" will be imported. §6This will overwrite all existing words added to the config file."
       license: "It is licensed under the {license} license. The sources for this list are available at {credits_url}."
   success: "§aList §f{name} §awas imported successfully."
   error_code:
