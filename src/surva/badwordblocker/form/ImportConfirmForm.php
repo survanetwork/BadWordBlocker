@@ -84,7 +84,7 @@ class ImportConfirmForm implements Form
 
             return;
         }
-        $this->badWordBlocker->loadConfig();
+        $this->badWordBlocker->getFilterManager()->reloadFilterConfigs();
 
         $this->badWordBlocker->sendMessage($player, "import.success", ["name" => $this->selectedListSource["name"]]);
     }

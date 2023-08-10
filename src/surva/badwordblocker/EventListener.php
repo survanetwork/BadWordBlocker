@@ -58,7 +58,7 @@ class EventListener implements Listener
 
         $realMessage = implode(" ", $args);
 
-        if (!$this->badWordBlocker->checkMessage($sender, $realMessage)) {
+        if ($this->badWordBlocker->getFilterManager()->checkMessage($sender, $realMessage)) {
             $event->cancel();
         }
     }
@@ -73,7 +73,7 @@ class EventListener implements Listener
         $player  = $event->getPlayer();
         $message = $event->getMessage();
 
-        if (!$this->badWordBlocker->checkMessage($player, $message)) {
+        if ($this->badWordBlocker->getFilterManager()->checkMessage($player, $message)) {
             $event->cancel();
         }
     }
