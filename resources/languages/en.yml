@@ -13,6 +13,7 @@ blocked:
   lastwritten: "§cPlease write something else."
   timewritten: "§cPlease don't write so fast."
   caps: "§cPlease turn off caps."
+  address: "§6It's not permitted to write web addresses, including IP addresses, websites/domains or e-mail addresses into the chat."
 
 # Bypassed message
 filter_bypassed: "The §eBadWordBlocker §rfilter was bypassed because of your permissions."

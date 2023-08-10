@@ -38,6 +38,9 @@ uppercasepercentage: 0.75
 # Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI, OK, etc.)
 minimumchars: 3
 
+# Filter web addresses like IP addresses, domains, or email addresses
+filter_web_addresses: true
+
 # After how many violations against the chat filter, a player should be kicked/banned - set to 0 to disable
 # Violations are reset after a server restart
 violations:
