@@ -30,7 +30,10 @@ class Import
         }
 
         $text = $webRes->getBody();
-        return explode(PHP_EOL, $text);
+        $words = explode(PHP_EOL, $text);
+        return array_filter($words, function ($word) {
+            return $word !== "";
+        });
     }
 
     /**
