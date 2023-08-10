@@ -144,7 +144,8 @@ class FilterManager
           new SwearWordFilter($this),
           new DuplicateFilter($this),
           new SpeedFilter($this),
-          new CapsLockFilter($this)
+          new CapsLockFilter($this),
+          new WebAddressFilter($this)
         ];
     }
 
