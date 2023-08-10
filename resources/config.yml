@@ -23,6 +23,9 @@ badwords:
 # Ignore spaces in messages when checking for swear words / spam
 ignorespaces: true
 
+# Check placed signs if they violate a filter
+check_signs: true
+
 # Show the player which word has been blocked
 showblocked: false
 
