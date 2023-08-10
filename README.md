@@ -41,9 +41,11 @@
 [• License](#%EF%B8%8F-license)
 
 ## 📙 Description
-BadWorkBlocker is a chat filter suitable for every server to keep the chat clean from swear words and spam.
+BadWorkBlocker is a chat filter suitable for every server to keep the chat clean from swear words and spam (including ready-to-use lists).
 It can prevent swear words, sending the same message twice, sending too many messages and using caps lock.
-It's highly configurable for nearly every needs.
+Additionally, it can filter messages that contain IP addresses, websites or e-mail addresses.
+Filtering is done at each aspect of the game, including the public server chat, private tell messages and text on signs.
+The plugin is highly configurable for nearly every needs.
 
 ## 🎁 Features
 The main features of this plugin are:
@@ -52,6 +54,9 @@ The main features of this plugin are:
 - **BLOCK SAME MESSAGES** Show a warning to the player if he tries to send the same message twice
 - **PREVENT SPAM** Prevent spam by preventing the player to send messages in an interval shorter than specified in the config
 - **ANTI CAPS** Filter messages containing too much uppercase letters
+- **BLOCK ADDRESSES** Prevent sending IP addresses, websites/domains and e-mail addresses into the chat
+- **IMPORT LISTS** Import profanity word list from internet sources right into the plugin's config
+- **ADVANCED FILTERING** Not only check chat messages, but also private messages or text on placed signs
 
 ## 🖱 Usage
 All settings can be changed in the `config.yml`-file, there are no commands:
@@ -60,6 +65,10 @@ All settings can be changed in the `config.yml`-file, there are no commands:
 # Language of the plugin messages
 # Possible options are: en (English), de (German), fr (French), ru (Russian), tr (Turkish), id (Indonesian)
 language: "en"
+
+# Try to automatically detect the player's language and send translated messages for each player
+# (language set above is used if player's language can't be detected)
+autodetectlanguage: true
 
 # List of the blocked words
 badwords:
@@ -82,12 +91,21 @@ uppercasepercentage: 0.75
 # Minimum amount of chars in a message required to activate caps checker (to avoid blocking HI, OK, etc.)
 minimumchars: 3
 
+# Filter web addresses like IP addresses, domains, or email addresses
+filter_web_addresses: true
+
+# Check placed signs if they violate a filter
+check_signs: true
+
 # After how many violations against the chat filter, a player should be kicked/banned - set to 0 to disable
 # Violations are reset after a server restart
 violations:
   kick: 0
   ban: 0
   resetafterkick: true # reset violations after kick (this disables banning if kick-count is lower)
+
+# Send a reminder message once per session if bypassing filters using ones permissions
+send_bypassed_message: true
 ```
 
 [Read the full documentation 📖](https://plugin-docs.surva.net/badwordblocker) • [Ask questions on Discord 💬](https://discord.gg/t4Kg4j3829)
