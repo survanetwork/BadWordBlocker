@@ -6,6 +6,7 @@
 
 namespace surva\badwordblocker;
 
+use pocketmine\event\block\SignChangeEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\server\CommandEvent;
@@ -74,6 +75,27 @@ class EventListener implements Listener
         $message = $event->getMessage();
 
         if ($this->badWordBlocker->getFilterManager()->checkMessage($player, $message)) {
+            $event->cancel();
+        }
+    }
+
+    /**
+     * Check placed signs if they violate filters
+     *
+     * @param  \pocketmine\event\block\SignChangeEvent  $event
+     *
+     * @return void
+     */
+    public function onSignChange(SignChangeEvent $event): void
+    {
+        if ($this->badWordBlocker->getConfig()->get("check_signs", true) !== true) {
+            return;
+        }
+
+        $player = $event->getPlayer();
+        $fullText = implode("", $event->getNewText()->getLines());
+
+        if ($this->badWordBlocker->getFilterManager()->checkMessage($player, $fullText)) {
             $event->cancel();
         }
     }
