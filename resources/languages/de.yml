@@ -6,8 +6,6 @@
 #
 # (C) 2018 by surva network | https://github.com/survanetwork
 
-# German language
-
 # Block messages
 blocked:
   message: "§eDeine Nachricht wurde von BadWordBlocker §cblockiert§e."
@@ -15,6 +13,28 @@ blocked:
   lastwritten: "§cBitte schreibe etwas anderes."
   timewritten: "§cBitte schreibe nicht so schnell."
   caps: "§cBitte schreibe nicht alles in Großbuchstaben."
+  address: "§6Es ist nicht erlaubt, Internet-Adressen wie IP-Adressen, Websites/Domains oder E-Mail-Adressen in den Chat zu schreiben."
 
-# Kick message
-kick: "§eDu wurdest von BadWordBlocker §cgekickt§e."
+# Bypassed message
+filter_bypassed: "Der §eBadWordBlocker §rFilter wurde aufgrund deiner Berechtigungen umgangen."
+
+# Kick & ban messages
+punishment:
+  kick: "§eDu wurdest von BadWordBlocker §cgekickt§e."
+  ban: "§eDu wurdest von BadWordBlocker §cgebannt§e."
+
+# Import workflow
+import:
+  form:
+    select:
+      title: "Wähle eine Liste zum Import"
+      description: "Du kannst Wortfilter-Listen importieren, die bereit zur Verwendung sind und im Internet unter einer offenen Lizenz veröffentlicht wurden."
+      dropdown: "Wähle eine Liste"
+    confirm:
+      title: "Listen-Import bestätigen"
+      description: "Die Liste \"{name}\" wird importiert. §6Dieser Vorgang wird alle vorhanden Wörter überschreiben, die zur Config-Datei hinzugefügt wurden."
+      license: "Sie ist unter der {license} Lizenz veröffentlicht. Der Quellcode der Liste ist abrufbar unter {credits_url}."
+  success: "§aListe §f{name} §awurde erfolgreich importiert."
+  error_code:
+    web_request: "§cKonnte Liste nicht von Datenquelle aus dem Internet importieren, Fehler bei der Verbindung!"
+    config_save: "§cKonnte Config-Datei mit importierter Liste nicht speichern!"
