@@ -6,7 +6,6 @@
 
 namespace surva\badwordblocker;
 
-use DirectoryIterator;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
@@ -15,6 +14,7 @@ use pocketmine\utils\Config;
 use surva\badwordblocker\filter\FilterManager;
 use surva\badwordblocker\form\ImportSelectForm;
 use surva\badwordblocker\util\Messages;
+use Symfony\Component\Filesystem\Path;
 
 class BadWordBlocker extends PluginBase
 {
@@ -45,12 +45,14 @@ class BadWordBlocker extends PluginBase
     {
         $this->saveDefaultConfig();
 
-        $this->defaultMessages = new Config($this->getFile() . "resources/languages/en.yml");
+        $this->saveResource(Path::join("languages", "en.yml"), true);
+        $this->defaultMessages = new Config(Path::join($this->getDataFolder(), "languages", "en.yml"));
         $this->loadLanguageFiles();
 
         $this->filterManager = new FilterManager($this);
 
-        $listSourcesConfig = new Config($this->getFile() . "resources/list_sources.yml");
+        $this->saveResource("list_sources.yml", true);
+        $listSourcesConfig = new Config(Path::join($this->getDataFolder(), "list_sources.yml"));
         $this->availableListSources = $listSourcesConfig->getNested("sources");
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -109,18 +111,14 @@ class BadWordBlocker extends PluginBase
      */
     private function loadLanguageFiles(): void
     {
-        $languageFilesDir = $this->getFile() . "resources/languages/";
+        $resources = $this->getResources();
 
-        foreach (new DirectoryIterator($languageFilesDir) as $dirObj) {
-            if (!($dirObj instanceof DirectoryIterator)) {
+        foreach ($resources as $resource) {
+            if (!preg_match("/languages\/[a-z]{2}.yml$/", $resource->getPathname())) {
                 continue;
             }
 
-            if (!$dirObj->isFile() || !str_ends_with($dirObj->getFilename(), ".yml")) {
-                continue;
-            }
-
-            preg_match("/^[a-z][a-z]/", $dirObj->getFilename(), $fileNameRes);
+            preg_match("/^[a-z][a-z]/", $resource->getFilename(), $fileNameRes);
 
             if (!isset($fileNameRes[0])) {
                 continue;
@@ -128,8 +126,9 @@ class BadWordBlocker extends PluginBase
 
             $langId = $fileNameRes[0];
 
+            $this->saveResource(Path::join("languages", $langId . ".yml"), true);
             $this->translationMessages[$langId] = new Config(
-                $this->getFile() . "resources/languages/" . $langId . ".yml"
+                Path::join($this->getDataFolder(), "languages", $langId . ".yml")
             );
         }
     }
