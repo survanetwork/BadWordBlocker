@@ -44,10 +44,11 @@ class Messages
 
         $defaultLangId = $this->badWordBlocker->getConfig()->get("language", "en");
 
-        if ($prefLangId !== null) {
-            $langConfig = $this->badWordBlocker->getTranslationMessages()[$prefLangId];
+        $tm = $this->badWordBlocker->getTranslationMessages();
+        if ($prefLangId !== null && isset($tm[$prefLangId])) {
+            $langConfig = $tm[$prefLangId];
         } else {
-            $langConfig = $this->badWordBlocker->getTranslationMessages()[$defaultLangId];
+            $langConfig = $tm[$defaultLangId];
         }
 
         $rawMessage = $langConfig->getNested($key);
