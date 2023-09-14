@@ -12,6 +12,10 @@ use surva\badwordblocker\util\Messages;
 class SwearWordFilter extends Filter
 {
     private FilterManager $filterManager;
+
+    /**
+     * @var string[] raw list of blocked words
+     */
     private array $blockedWords;
 
     /**
@@ -39,15 +43,15 @@ class SwearWordFilter extends Filter
     {
         $messages = new Messages($this->filterManager->getBadWordBlocker(), $pl);
 
+        $blocked = null;
         if ($this->filterManager->getBadWordBlocker()->getConfig()->get("showblocked") === true) {
             $blocked = $this->contains($originalMessage, $this->blockedWords);
-
-            $pl->sendMessage(
-                $messages->getMessage("blocked.messagewithblocked", ["blocked" => $blocked])
-            );
-        } else {
-            $pl->sendMessage($messages->getMessage("blocked.message"));
         }
+
+        $msg = $blocked
+          ? $messages->getMessage("blocked.messagewithblocked", ["blocked" => $blocked])
+          : $messages->getMessage("blocked.message");
+        $pl->sendMessage($msg);
 
         $this->filterManager->handleViolation($pl);
     }
@@ -64,7 +68,7 @@ class SwearWordFilter extends Filter
      * Check if a string contains a specific string from an array and return it
      *
      * @param  string  $string
-     * @param  array  $contains
+     * @param  string[]  $contains
      *
      * @return string|null
      */

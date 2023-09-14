@@ -20,10 +20,13 @@ class FilterManager
     private array $filters;
 
     /**
-     * @var array players to which the bypassed message was already sent during this runtime
+     * @var bool[] players to which the bypassed message was already sent during this runtime
      */
     private array $bypassedMessageSent;
 
+    /**
+     * @var int[] violations counter for players
+     */
     private array $playersViolations;
 
     /**

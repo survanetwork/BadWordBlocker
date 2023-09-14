@@ -24,7 +24,7 @@ class BadWordBlocker extends PluginBase
     private Config $defaultMessages;
 
     /**
-     * @var array available language configs
+     * @var Config[] available language configs
      */
     private array $translationMessages;
 
@@ -34,7 +34,8 @@ class BadWordBlocker extends PluginBase
     private FilterManager $filterManager;
 
     /**
-     * @var array available sources for lists to import
+     * @phpstan-ignore-next-line
+     * @var array[] available sources for lists to import
      */
     private array $availableListSources;
 
@@ -64,7 +65,7 @@ class BadWordBlocker extends PluginBase
      * @param  \pocketmine\command\CommandSender  $sender
      * @param  \pocketmine\command\Command  $command
      * @param  string  $label
-     * @param  array  $args
+     * @param  string[]  $args
      *
      * @return bool
      */
@@ -93,7 +94,7 @@ class BadWordBlocker extends PluginBase
      *
      * @param  \pocketmine\command\CommandSender  $sender
      * @param  string  $key
-     * @param  array  $replaces
+     * @param  string[]  $replaces
      *
      * @return void
      */
@@ -144,7 +145,7 @@ class BadWordBlocker extends PluginBase
     }
 
     /**
-     * @return array
+     * @return Config[]
      */
     public function getTranslationMessages(): array
     {
