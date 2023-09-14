@@ -15,6 +15,10 @@ use surva\badwordblocker\util\Messages;
 class SpeedFilter extends Filter
 {
     private FilterManager $filterManager;
+
+    /**
+     * @var DateTime[] times of players when they wrote the last message
+     */
     private array $playersTimeWritten;
 
     /**

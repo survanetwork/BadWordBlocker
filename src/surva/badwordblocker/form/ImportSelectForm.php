@@ -17,18 +17,23 @@ class ImportSelectForm implements Form
     private Messages $messages;
 
     /**
-     * @var array properties of available list sources
+     * @var string[][] properties of available list sources
      */
     private array $listSources;
 
     private string $type = "custom_form";
     private string $title;
+
+    /**
+     * @phpstan-ignore-next-line
+     * @var array[]
+     */
     private array $content;
 
     /**
      * @param  \surva\badwordblocker\BadWordBlocker  $badWordBlocker
      * @param  \surva\badwordblocker\util\Messages  $messages
-     * @param  array  $listSources
+     * @param  string[][]  $listSources
      */
     public function __construct(BadWordBlocker $badWordBlocker, Messages $messages, array $listSources)
     {
@@ -83,6 +88,7 @@ class ImportSelectForm implements Form
     /**
      * Return JSON data of the form
      *
+     * @phpstan-ignore-next-line
      * @return array
      */
     public function jsonSerialize(): array

@@ -12,6 +12,10 @@ use surva\badwordblocker\util\Messages;
 class DuplicateFilter extends Filter
 {
     private FilterManager $filterManager;
+
+    /**
+     * @var string[] last written message of players
+     */
     private array $playersLastWritten;
 
     /**

@@ -19,13 +19,13 @@ class Import
      *
      * @param  string  $sourceUrl
      *
-     * @return array
+     * @return string[]
      */
     public static function textListAsArray(string $sourceUrl): array
     {
         $webRes = Internet::getURL($sourceUrl);
 
-        if ($webRes->getCode() !== self::HTTP_OK) {
+        if ($webRes === null || $webRes->getCode() !== self::HTTP_OK) {
             throw new InternetException();
         }
 
@@ -40,7 +40,7 @@ class Import
      * Import array of blocked words to config
      *
      * @param  \pocketmine\utils\Config  $config
-     * @param  array  $list
+     * @param  string[]  $list
      *
      * @return void
      * @throws \JsonException

@@ -19,18 +19,23 @@ class ImportConfirmForm implements Form
     private BadWordBlocker $badWordBlocker;
 
     /**
-     * @var array properties of the selected list source
+     * @var string[] properties of the selected list source
      */
     private array $selectedListSource;
 
     private string $type = "custom_form";
     private string $title;
+
+    /**
+     * @phpstan-ignore-next-line
+     * @var array[]
+     */
     private array $content;
 
     /**
      * @param  \surva\badwordblocker\BadWordBlocker  $badWordBlocker
      * @param  \surva\badwordblocker\util\Messages  $messages
-     * @param  array  $selectedListSource
+     * @param  string[]  $selectedListSource
      */
     public function __construct(BadWordBlocker $badWordBlocker, Messages $messages, array $selectedListSource)
     {
@@ -92,6 +97,7 @@ class ImportConfirmForm implements Form
     /**
      * Return JSON data of the form
      *
+     * @phpstan-ignore-next-line
      * @return array
      */
     public function jsonSerialize(): array
