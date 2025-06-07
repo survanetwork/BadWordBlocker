@@ -34,8 +34,7 @@ class BadWordBlocker extends PluginBase
     private FilterManager $filterManager;
 
     /**
-     * @phpstan-ignore-next-line
-     * @var array[] available sources for lists to import
+     * @var mixed[] available sources for lists to import
      */
     private array $availableListSources;
 

@@ -25,8 +25,7 @@ class ImportSelectForm implements Form
     private string $title;
 
     /**
-     * @phpstan-ignore-next-line
-     * @var array[]
+     * @var mixed[]
      */
     private array $content;
 
@@ -88,8 +87,7 @@ class ImportSelectForm implements Form
     /**
      * Return JSON data of the form
      *
-     * @phpstan-ignore-next-line
-     * @return array
+     * @return mixed[]
      */
     public function jsonSerialize(): array
     {
