@@ -5,7 +5,7 @@ api: 5.0.0
 
 author: survanetwork
 description: A chat filter which can block certain things
-website: https://plugins.surva.net/#badwordblocker
+website: https://dev.surva.net/plugins/#badwordblocker
 
 commands:
   badwordblocker:
