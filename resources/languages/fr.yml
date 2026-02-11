@@ -1,16 +1,25 @@
-#  ____            ___        __            _ ____  _            _
-# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
-# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
-# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
-# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
-#
-# (C) 2018 by surva network | https://github.com/survanetwork
-
-# French language
-
-# Block messages
 blocked:
   message: "§eTon message a été §cbloqué §epar BadWordBlocker."
+  messagewithblocked: "§eVotre message a été §cbloqué §epar BadWordBlocker à cause du mot §8{blocked}§e."
   lastwritten: "§cVeuille écrire autre chose."
   timewritten: "§cS’il te plaît, n’écris pas si vite."
   caps: "§cVeuille ne pas écrire tout en majuscules."
+  address: "§6Il n'est pas permis d'écrire des adresses web, y compris les adresses IP, les sites/domaine ou les adresses e‑mail dans le chat."
+filter_bypassed: "Le filtre §eBadWordBlocker §r a été contourné en raison de vos permissions."
+punishment:
+  kick: "§eVous avez été §cexpulsé §epar BadWordBlocker."
+  ban: "§eVous avez été §cbanni §epar BadWordBlocker."
+import:
+  form:
+    select:
+      title: "Sélectionnez la liste à importer"
+      description: "Vous pouvez choisir parmi des listes de jurons prêtes à l'emploi disponibles sur Internet sous licence ouverte à importer."
+      dropdown: "Sélectionner une liste"
+    confirm:
+      title: "Confirmer l'importation de la liste"
+      description: "La liste \"{name}\" sera importée. §6Cela écrasera tous les mots existants ajoutés au fichier de configuration."
+      license: "Elle est sous licence {license}. Les sources de cette liste sont disponibles à {credits_url}."
+  success: "§aListe §f{name} §aa été importée avec succès."
+  error_code:
+    web_request: "§cImpossible d'importer la liste depuis la source internet, connexion échouée !"
+    config_save: "§cImpossible d'enregistrer le fichier de configuration avec la liste importée !"

@@ -1,0 +1,21 @@
+version: 1
+checksums:
+  68b1b8ed5acfeec53f651eef897d42ac:
+    blocked/message: 925b57601c646b04318b9c6e53d87e4e
+    blocked/messagewithblocked: cb0d9a61a440a0468e74c2e3aa9f3e4f
+    blocked/lastwritten: e3966d58ab78d8a8839f9a42331e1015
+    blocked/timewritten: 729d96749ec1d40c9d1c81dbfa790105
+    blocked/caps: 2625e14cf6f6504241b6482f2ee81e7d
+    blocked/address: f89d3117986656eada9e47ab6c36b319
+    filter_bypassed: 6a9f5a570fddffde1a1f90b894c6b3fe
+    punishment/kick: e25f968e1974c94fe1fd7db354f60e49
+    punishment/ban: d4a4a777013c15f74e0f2e3b08fa76d7
+    import/form/select/title: 8c6170b3b55335fea39e84ee0a571ab3
+    import/form/select/description: eb6247249574940b895a615a3ebd9640
+    import/form/select/dropdown: 8b36455dd5b43e56d2ab06e522c3bacc
+    import/form/confirm/title: bf9822a7a7ab0d88c04dfcdff1f00fda
+    import/form/confirm/description: 9c55f1a6132244b078b1dc2136c4ff59
+    import/form/confirm/license: 1b962062e0d6235666e2895e76064b41
+    import/success: 79388f3770e3f6acbc3d54c69b5ea987
+    import/error_code/web_request: 749d80bd00bd53c69772c3a850cb574d
+    import/error_code/config_save: 33a815eb857f8775e8542db0f75f2831

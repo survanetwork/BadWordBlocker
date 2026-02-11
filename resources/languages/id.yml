@@ -1,19 +1,25 @@
-#  ____            ___        __            _ ____  _            _
-# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
-# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
-# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
-# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
-#
-# (C) 2018 by surva network | https://github.com/survanetwork
-
-# Indonesian language by @Kygekraqmak (GitHub)
-
-# Block messages
 blocked:
   message: "§ePesan Anda telah §cdiblokir §eoleh BadWordBlocker."
+  messagewithblocked: "§ePesan Anda telah §cdiblokir §eoleh BadWordBlocker karena kata §8{blocked}§e."
   lastwritten: "§cMohon ketik yang lain."
   timewritten: "§cMohon jangan mengetik terlalu cepat."
   caps: "§cMohon matikan huruf besar."
-
-# Kick message
-kick: "§eAnda telah §cdikeluarkan §eoleh BadWordBlocker."
+  address: "§6Tidak diizinkan menulis alamat web, termasuk alamat IP, situs web/domain, atau alamat email ke dalam obrolan."
+filter_bypassed: "Filter §eBadWordBlocker §r telah dilewati karena izin Anda."
+punishment:
+  kick: "§eAnda telah §cditendang §eoleh BadWordBlocker."
+  ban: "§eAnda telah §cdiblokir §eoleh BadWordBlocker."
+import:
+  form:
+    select:
+      title: "Pilih daftar untuk diimpor"
+      description: "Anda dapat memilih dari beberapa daftar kata kasar siap pakai dari internet yang diterbitkan di bawah lisensi terbuka untuk diimpor."
+      dropdown: "Pilih sebuah daftar"
+    confirm:
+      title: "Konfirmasi impor daftar"
+      description: "Daftar \"{name}\" akan diimpor. §6Ini akan menimpa semua kata yang ada yang ditambahkan ke file konfigurasi."
+      license: "Berlisensi di bawah lisensi {license}. Sumber daftar ini tersedia di {credits_url}."
+  success: "§aDaftar §f{name} §aberhasil diimpor."
+  error_code:
+    web_request: "§cTidak dapat mengimpor daftar dari sumber data internet, koneksi gagal!"
+    config_save: "§cTidak dapat menyimpan file konfigurasi dengan daftar yang diimpor!"

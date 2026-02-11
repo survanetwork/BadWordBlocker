@@ -1,16 +1,25 @@
-#  ____            ___        __            _ ____  _            _
-# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
-# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
-# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
-# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
-#
-# (C) 2018 by surva network | https://github.com/survanetwork
-
-# Turkish language
-
-# Block messages
 blocked:
   message: "§eMesajınız §eBadWordBlocker tarafından §cengellendi."
+  messagewithblocked: "§eMesajınız §cengellendi §eBadWordBlocker tarafından, kelime §8{blocked}§e nedeniyle."
   lastwritten: "§cLütfen başka bir şey yazın."
   timewritten: "§cLütfen bu kadar hızlı yazmayın."
   caps: "§cLütfen caps'i kapatın."
+  address: "§6Web adresleri, IP adresleri, web siteleri/alan adları ya da e-posta adresleri gibi adreslerin sohbete yazılması izin verilmez."
+filter_bypassed: "§eBadWordBlocker §rfiltre, izinlerinizden dolayı atlatıldı."
+punishment:
+  kick: "§eBadWordBlocker tarafından §cçıkartıldınız§e."
+  ban: "§eBadWordBlocker tarafından §cbanlandınız§e."
+import:
+  form:
+    select:
+      title: "İçe aktarmak için liste seçin"
+      description: "İçe aktarmak için, açık lisans altında yayınlanmış internetten hazır kullanılabilir küfür listelerinden birini seçebilirsiniz."
+      dropdown: "Bir liste seçin"
+    confirm:
+      title: "Listeyi içe aktarmayı onayla"
+      description: "\"{name}\" listesi içe aktarılacak. §6Bu işlem, yapılandırma dosyasına eklenmiş tüm mevcut kelimelerin üzerine yazacaktır."
+      license: "Bu liste {license} lisansı altında lisanslanmıştır. Listenin kaynakları {credits_url} adresinde mevcuttur."
+  success: "§aListe §f{name} §abaşarıyla içe aktarıldı."
+  error_code:
+    web_request: "§cİnternet veri kaynağından liste içe aktarılamadı, bağlantı başarısız!"
+    config_save: "§cİçe aktarılan listeyle yapılandırma dosyası kaydedilemedi!"

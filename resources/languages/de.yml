@@ -1,12 +1,3 @@
-#  ____            ___        __            _ ____  _            _
-# | __ )  __ _  __| \ \      / /__  _ __ __| | __ )| | ___   ___| | _____ _ __
-# |  _ \ / _` |/ _` |\ \ /\ / / _ \| '__/ _` |  _ \| |/ _ \ / __| |/ / _ \ '__|
-# | |_) | (_| | (_| | \ V  V / (_) | | | (_| | |_) | | (_) | (__|   <  __/ |
-# |____/ \__,_|\__,_|  \_/\_/ \___/|_|  \__,_|____/|_|\___/ \___|_|\_\___|_|
-#
-# (C) 2018 by surva network | https://github.com/survanetwork
-
-# Block messages
 blocked:
   message: "§eDeine Nachricht wurde von BadWordBlocker §cblockiert§e."
   messagewithblocked: "§eDeine Nachricht wurde von BadWordBlocker aufgrund dem Wort §8{blocked} §cblockiert§e."
@@ -14,16 +5,10 @@ blocked:
   timewritten: "§cBitte schreibe nicht so schnell."
   caps: "§cBitte schreibe nicht alles in Großbuchstaben."
   address: "§6Es ist nicht erlaubt, Internet-Adressen wie IP-Adressen, Websites/Domains oder E-Mail-Adressen in den Chat zu schreiben."
-
-# Bypassed message
 filter_bypassed: "Der §eBadWordBlocker §rFilter wurde aufgrund deiner Berechtigungen umgangen."
-
-# Kick & ban messages
 punishment:
   kick: "§eDu wurdest von BadWordBlocker §cgekickt§e."
   ban: "§eDu wurdest von BadWordBlocker §cgebannt§e."
-
-# Import workflow
 import:
   form:
     select:
