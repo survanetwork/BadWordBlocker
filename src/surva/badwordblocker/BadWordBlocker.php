@@ -44,14 +44,12 @@ class BadWordBlocker extends PluginBase
      */
     public function onEnable(): void
     {
-        $this->saveResource(Path::join("languages", "en.yml"), true);
-        $this->defaultMessages = new Config(Path::join($this->getDataFolder(), "languages", "en.yml"));
+        $this->defaultMessages = new Config($this->getResourcePath(Path::join("languages", "en.yml")));
         $this->loadLanguageFiles();
 
         $this->filterManager = new FilterManager($this);
 
-        $this->saveResource("list_sources.yml", true);
-        $listSourcesConfig = new Config(Path::join($this->getDataFolder(), "list_sources.yml"));
+        $listSourcesConfig = new Config($this->getResourcePath("list_sources.yml"));
         $this->availableListSources = $listSourcesConfig->getNested("sources");
 
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
@@ -117,9 +115,8 @@ class BadWordBlocker extends PluginBase
 
             $langId = $fileNameRes[0];
 
-            $this->saveResource(Path::join("languages", $langId . ".yml"), true);
             $this->translationMessages[$langId] = new Config(
-                Path::join($this->getDataFolder(), "languages", $langId . ".yml")
+                $this->getResourcePath(Path::join("languages", $langId . ".yml"))
             );
         }
     }
