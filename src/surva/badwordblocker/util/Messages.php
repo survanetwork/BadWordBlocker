@@ -13,7 +13,6 @@ use surva\badwordblocker\BadWordBlocker;
 class Messages
 {
     private BadWordBlocker $badWordBlocker;
-
     private ?CommandSender $sender;
 
     public function __construct(BadWordBlocker $badWordBlocker, ?CommandSender $sender = null)
@@ -25,8 +24,8 @@ class Messages
     /**
      * Get a translated message
      *
-     * @param  string  $key
-     * @param  string[]  $replaces
+     * @param string $key
+     * @param array<string, string> $replaces
      *
      * @return string
      */

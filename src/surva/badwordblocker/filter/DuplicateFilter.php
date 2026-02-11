@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | duplicate message filter
+ * BadWordBlocker | duplicate message filter, blocks message
+ * if it is a duplicate of the previous message sent by the player
  */
 
 namespace surva\badwordblocker\filter;
@@ -12,15 +13,11 @@ use surva\badwordblocker\util\Messages;
 class DuplicateFilter extends Filter
 {
     private FilterManager $filterManager;
-
     /**
      * @var string[] last written message of players
      */
     private array $playersLastWritten;
 
-    /**
-     * @param  \surva\badwordblocker\filter\FilterManager  $filterManager
-     */
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;

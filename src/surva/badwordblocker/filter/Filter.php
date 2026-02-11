@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | general filter class
+ * BadWordBlocker | general filter class that filter implementations
+ * should extend
  */
 
 namespace surva\badwordblocker\filter;
@@ -11,10 +12,10 @@ use pocketmine\player\Player;
 abstract class Filter
 {
     /**
-     * Check message if it violates the filter
+     * Check if a message violates the filter
      *
-     * @param  \pocketmine\player\Player  $pl
-     * @param  string  $message
+     * @param Player $pl
+     * @param string $message
      *
      * @return bool true = violation found; false = message ok, no violation
      */
@@ -23,8 +24,8 @@ abstract class Filter
     /**
      * Handle violation of the filter
      *
-     * @param  \pocketmine\player\Player  $pl
-     * @param  string  $originalMessage
+     * @param Player $pl
+     * @param string $originalMessage
      *
      * @return void
      */
@@ -33,8 +34,8 @@ abstract class Filter
     /**
      * Save the message for comparing on next check (e.g. for duplicate, time, etc.)
      *
-     * @param  \pocketmine\player\Player  $pl
-     * @param  string  $message
+     * @param Player $pl
+     * @param string $message
      *
      * @return void
      */

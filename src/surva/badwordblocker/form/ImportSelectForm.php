@@ -15,7 +15,6 @@ class ImportSelectForm implements Form
 {
     private BadWordBlocker $badWordBlocker;
     private Messages $messages;
-
     /**
      * @var string[][] properties of available list sources
      */
@@ -23,16 +22,15 @@ class ImportSelectForm implements Form
 
     private string $type = "custom_form";
     private string $title;
-
     /**
-     * @var mixed[]
+     * @var array<string, mixed>[]
      */
     private array $content;
 
     /**
-     * @param  \surva\badwordblocker\BadWordBlocker  $badWordBlocker
-     * @param  \surva\badwordblocker\util\Messages  $messages
-     * @param  string[][]  $listSources
+     * @param BadWordBlocker $badWordBlocker
+     * @param Messages $messages
+     * @param string[][] $listSources
      */
     public function __construct(BadWordBlocker $badWordBlocker, Messages $messages, array $listSources)
     {
@@ -44,22 +42,23 @@ class ImportSelectForm implements Form
         $this->content = [
           [
             "type" => "label",
-            "text" => $messages->getMessage("import.form.select.description")
+            "text" => $messages->getMessage("import.form.select.description"),
           ],
           [
-            "type"    => "dropdown",
-            "text"    => $messages->getMessage("import.form.select.dropdown"),
+            "type" => "dropdown",
+            "text" => $messages->getMessage("import.form.select.dropdown"),
             "options" => array_map(function ($listSource) {
                 return $listSource["name"];
-            }, $listSources)
-          ]
+            }, $listSources),
+          ],
         ];
     }
 
     /**
-     * Handle form submit
+     * Handle form submit, check if selected list index is valid
+     * and open import confirm form
      *
-     * @param  \pocketmine\player\Player  $player
+     * @param Player $player
      * @param $data
      *
      * @return void
@@ -87,13 +86,13 @@ class ImportSelectForm implements Form
     /**
      * Return JSON data of the form
      *
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
         return [
-          "type"    => $this->type,
-          "title"   => $this->title,
+          "type" => $this->type,
+          "title" => $this->title,
           "content" => $this->content,
         ];
     }

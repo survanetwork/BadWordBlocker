@@ -1,11 +1,13 @@
 <?php
 
 /**
- * BadWordBlocker | utility for importing lists to config
+ * BadWordBlocker | utility for importing lists from the web to
+ * the plugin config
  */
 
 namespace surva\badwordblocker\util;
 
+use JsonException;
 use pocketmine\utils\Config;
 use pocketmine\utils\Internet;
 use pocketmine\utils\InternetException;
@@ -17,7 +19,7 @@ class Import
     /**
      * Get a simple plain text list from the internet as an array
      *
-     * @param  string  $sourceUrl
+     * @param string $sourceUrl
      *
      * @return string[]
      */
@@ -39,11 +41,11 @@ class Import
     /**
      * Import array of blocked words to config
      *
-     * @param  \pocketmine\utils\Config  $config
-     * @param  string[]  $list
+     * @param Config $config
+     * @param string[] $list
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function importArrayToConfig(Config $config, array $list): void
     {

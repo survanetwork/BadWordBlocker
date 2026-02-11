@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | event listener
+ * BadWordBlocker | event listener to check chat messages, private message
+ * commands and sign texts against filters
  */
 
 namespace surva\badwordblocker;
@@ -22,9 +23,10 @@ class EventListener implements Listener
     }
 
     /**
-     * Cancel the tell command if the message doesn't pass the check
+     * Listen for tell command and its aliases, check the message against the filters
+     * and cancel if it doesn't pass the check
      *
-     * @param  \pocketmine\event\server\CommandEvent  $event
+     * @param CommandEvent $event
      *
      * @return void
      */
@@ -65,13 +67,16 @@ class EventListener implements Listener
     }
 
     /**
-     * Cancel a message if it doesn't pass the check
+     * Check chat message against filters and cancel
+     * if it don't pass the check
      *
-     * @param  PlayerChatEvent  $event
+     * @param PlayerChatEvent $event
+     *
+     * @return void
      */
     public function onPlayerChat(PlayerChatEvent $event): void
     {
-        $player  = $event->getPlayer();
+        $player = $event->getPlayer();
         $message = $event->getMessage();
 
         if ($this->badWordBlocker->getFilterManager()->checkMessage($player, $message)) {
@@ -80,9 +85,10 @@ class EventListener implements Listener
     }
 
     /**
-     * Check placed signs if they violate filters
+     * Check text on placed or edited sings against filters, cancel if
+     * it don't pass the check
      *
-     * @param  \pocketmine\event\block\SignChangeEvent  $event
+     * @param SignChangeEvent $event
      *
      * @return void
      */

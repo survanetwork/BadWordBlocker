@@ -1,7 +1,9 @@
 <?php
 
 /**
- * BadWordBlocker | manages/registers filters, check messages using all filters, etc.
+ * BadWordBlocker | main component for communication with filters, registers
+ * all filters and provides methods to check messages against them, handle
+ * violations, etc.
  */
 
 namespace surva\badwordblocker\filter;
@@ -15,39 +17,34 @@ class FilterManager
     private BadWordBlocker $badWordBlocker;
 
     /**
-     * @var \surva\badwordblocker\filter\Filter[] filters to check against
+     * @var Filter[] filters to check against
      */
     private array $filters;
-
     /**
      * @var bool[] players to which the bypassed message was already sent during this runtime
      */
     private array $bypassedMessageSent;
-
     /**
      * @var int[] violations counter for players
      */
     private array $playersViolations;
 
-    /**
-     * @param  \surva\badwordblocker\BadWordBlocker  $badWordBlocker
-     */
     public function __construct(BadWordBlocker $badWordBlocker)
     {
         $this->badWordBlocker = $badWordBlocker;
 
         $this->bypassedMessageSent = [];
-        $this->playersViolations  = [];
+        $this->playersViolations = [];
 
         $this->registerFilters();
     }
 
     /**
-     * Check the message of a player using registered filters
-     * (true = violation found; false = message ok, no violation)
+     * Check a message against all filters, returns true if a violation
+     * was found, false if the message is ok
      *
-     * @param  \pocketmine\player\Player  $player
-     * @param  string  $message
+     * @param Player $player
+     * @param string $message
      *
      * @return bool
      */
@@ -76,9 +73,12 @@ class FilterManager
     }
 
     /**
-     * Handle the occurrence of a chat block event, e.g. kick or ban the player if configured
+     * Register a filter violation and handle the punishment, e.g. kick
+     * or ban the player if configured
      *
-     * @param  \pocketmine\player\Player  $player
+     * @param Player $player
+     *
+     * @return void
      */
     public function handleViolation(Player $player): void
     {
@@ -90,8 +90,8 @@ class FilterManager
 
         $this->playersViolations[$playerName]++;
 
-        $violKick       = $this->badWordBlocker->getConfig()->getNested("violations.kick", 0);
-        $violBan        = $this->badWordBlocker->getConfig()->getNested("violations.ban", 0);
+        $violKick = $this->badWordBlocker->getConfig()->getNested("violations.kick", 0);
+        $violBan = $this->badWordBlocker->getConfig()->getNested("violations.ban", 0);
         $resetAfterKick = $this->badWordBlocker->getConfig()->getNested("violations.resetafterkick", true);
 
         $translMessages = new Messages($this->badWordBlocker, $player);
@@ -114,9 +114,10 @@ class FilterManager
     }
 
     /**
-     * Send filter bypassed reminder to a player if not already sent during this session
+     * Send filter bypassed message to a player if not already
+     * sent during this session
      *
-     * @param  \pocketmine\player\Player  $pl
+     * @param Player $pl
      *
      * @return void
      */
@@ -137,7 +138,7 @@ class FilterManager
     }
 
     /**
-     * Register filters to check the message against
+     * Register filters to check messages against
      *
      * @return void
      */
@@ -148,12 +149,12 @@ class FilterManager
           new DuplicateFilter($this),
           new SpeedFilter($this),
           new CapsLockFilter($this),
-          new WebAddressFilter($this)
+          new WebAddressFilter($this),
         ];
     }
 
     /**
-     * Tell filters to reload their config files
+     * Instruct filters to reload their config files
      *
      * @return void
      */
@@ -165,7 +166,7 @@ class FilterManager
     }
 
     /**
-     * @return \surva\badwordblocker\BadWordBlocker
+     * @return BadWordBlocker
      */
     public function getBadWordBlocker(): BadWordBlocker
     {

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | swear word filter
+ * BadWordBlocker | swear word filter, checks if the message
+ * contains any of the blocked words
  */
 
 namespace surva\badwordblocker\filter;
@@ -18,9 +19,6 @@ class SwearWordFilter extends Filter
      */
     private array $blockedWords;
 
-    /**
-     * @param  \surva\badwordblocker\filter\FilterManager  $filterManager
-     */
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;
@@ -67,8 +65,8 @@ class SwearWordFilter extends Filter
     /**
      * Check if a string contains a specific string from an array and return it
      *
-     * @param  string  $string
-     * @param  string[]  $contains
+     * @param string $string
+     * @param string[] $contains
      *
      * @return string|null
      */
@@ -91,7 +89,7 @@ class SwearWordFilter extends Filter
     }
 
     /**
-     * Load bad word list from config file
+     * Load swear word list from config file
      *
      * @return void
      */

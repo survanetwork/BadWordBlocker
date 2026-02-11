@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * BadWordBlocker | web address filter, search for IP addresses, domains and
+ * email addresses in the message
+ */
+
 namespace surva\badwordblocker\filter;
 
 use pocketmine\player\Player;
@@ -13,9 +18,6 @@ class WebAddressFilter extends Filter
 
     private FilterManager $filterManager;
 
-    /**
-     * @param  \surva\badwordblocker\filter\FilterManager  $filterManager
-     */
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;

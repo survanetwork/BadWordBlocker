@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | form for confirming list import
+ * BadWordBlocker | form for confirming list import, imports
+ * the selected list from the web to the config file
  */
 
 namespace surva\badwordblocker\form;
@@ -17,7 +18,6 @@ use surva\badwordblocker\util\Messages;
 class ImportConfirmForm implements Form
 {
     private BadWordBlocker $badWordBlocker;
-
     /**
      * @var string[] properties of the selected list source
      */
@@ -25,16 +25,15 @@ class ImportConfirmForm implements Form
 
     private string $type = "custom_form";
     private string $title;
-
     /**
-     * @var mixed[]
+     * @var array<string, mixed>[]
      */
     private array $content;
 
     /**
-     * @param  \surva\badwordblocker\BadWordBlocker  $badWordBlocker
-     * @param  \surva\badwordblocker\util\Messages  $messages
-     * @param  string[]  $selectedListSource
+     * @param BadWordBlocker $badWordBlocker
+     * @param Messages $messages
+     * @param string[] $selectedListSource
      */
     public function __construct(BadWordBlocker $badWordBlocker, Messages $messages, array $selectedListSource)
     {
@@ -45,25 +44,26 @@ class ImportConfirmForm implements Form
         $this->content = [
           [
             "type" => "label",
-            "text" => $messages->getMessage("import.form.confirm.description", ["name" => $selectedListSource["name"]])
+            "text" => $messages->getMessage("import.form.confirm.description", ["name" => $selectedListSource["name"]]),
           ],
           [
             "type" => "label",
             "text" => $messages->getMessage(
                 "import.form.confirm.license",
                 [
-                    "license" => $selectedListSource["license"],
-                    "credits_url" => $selectedListSource["credits_url"]
+                "license" => $selectedListSource["license"],
+                "credits_url" => $selectedListSource["credits_url"],
                 ]
-            )
+            ),
           ],
         ];
     }
 
     /**
-     * Handle form submit
+     * Handle form submit, try to import selected list from
+     * the web, add to config and reload filters config
      *
-     * @param  \pocketmine\player\Player  $player
+     * @param Player $player
      * @param $data
      *
      * @return void
@@ -96,13 +96,13 @@ class ImportConfirmForm implements Form
     /**
      * Return JSON data of the form
      *
-     * @return mixed[]
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {
         return [
-          "type"    => $this->type,
-          "title"   => $this->title,
+          "type" => $this->type,
+          "title" => $this->title,
           "content" => $this->content,
         ];
     }

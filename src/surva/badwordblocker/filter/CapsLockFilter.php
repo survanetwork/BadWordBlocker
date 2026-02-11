@@ -1,7 +1,9 @@
 <?php
 
 /**
- * BadWordBlocker | caps lock (all uppercase) filter
+ * BadWordBlocker | caps lock (all uppercase) filter, counts
+ * the percentage of uppercase chars in a message and compares
+ * it to the configured limit
  */
 
 namespace surva\badwordblocker\filter;
@@ -13,9 +15,6 @@ class CapsLockFilter extends Filter
 {
     private FilterManager $filterManager;
 
-    /**
-     * @param  \surva\badwordblocker\filter\FilterManager  $filterManager
-     */
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;
@@ -27,7 +26,7 @@ class CapsLockFilter extends Filter
     public function check(Player $pl, string $message): bool
     {
         $uppercasePercentage = $this->filterManager->getBadWordBlocker()->getConfig()->get("uppercasepercentage", 0.75);
-        $minimumChars        = $this->filterManager->getBadWordBlocker()->getConfig()->get("minimumchars", 3);
+        $minimumChars = $this->filterManager->getBadWordBlocker()->getConfig()->get("minimumchars", 3);
 
         $messageLength = strlen($message);
 
@@ -50,7 +49,7 @@ class CapsLockFilter extends Filter
     /**
      * Counts uppercase chars in a string
      *
-     * @param  string  $string
+     * @param string $string
      *
      * @return int
      */

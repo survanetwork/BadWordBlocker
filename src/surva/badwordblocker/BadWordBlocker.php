@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | plugin main class
+ * BadWordBlocker | plugin main class, initialize filter manager and list
+ * sources
  */
 
 namespace surva\badwordblocker;
@@ -19,32 +20,30 @@ use Symfony\Component\Filesystem\Path;
 class BadWordBlocker extends PluginBase
 {
     /**
-     * @var \pocketmine\utils\Config default language config
+     * @var Config default language config
      */
     private Config $defaultMessages;
-
     /**
      * @var Config[] available language configs
      */
     private array $translationMessages;
-
     /**
-     * @var \surva\badwordblocker\filter\FilterManager class for managing registered filters and check messages
+     * @var FilterManager class for managing registered filters and check messages
      */
     private FilterManager $filterManager;
-
     /**
-     * @var mixed[] available sources for lists to import
+     * @var array<string, string>[] available sources for lists to import
      */
     private array $availableListSources;
 
     /**
-     * Plugin has been enabled, initial setup
+     * Initial setup, load language files and list sources, initialize
+     * filter manager and event listener
+     *
+     * @return void
      */
     public function onEnable(): void
     {
-        $this->saveDefaultConfig();
-
         $this->saveResource(Path::join("languages", "en.yml"), true);
         $this->defaultMessages = new Config(Path::join($this->getDataFolder(), "languages", "en.yml"));
         $this->loadLanguageFiles();
@@ -58,16 +57,6 @@ class BadWordBlocker extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
     }
 
-    /**
-     * Listen for plugin command
-     *
-     * @param  \pocketmine\command\CommandSender  $sender
-     * @param  \pocketmine\command\Command  $command
-     * @param  string  $label
-     * @param  string[]  $args
-     *
-     * @return bool
-     */
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool
     {
         if (count($args) < 1) {
@@ -91,9 +80,9 @@ class BadWordBlocker extends PluginBase
     /**
      * Shorthand to send a translated message to a command sender
      *
-     * @param  \pocketmine\command\CommandSender  $sender
-     * @param  string  $key
-     * @param  string[]  $replaces
+     * @param CommandSender $sender
+     * @param string $key
+     * @param array<string, string> $replaces
      *
      * @return void
      */
@@ -136,7 +125,7 @@ class BadWordBlocker extends PluginBase
     }
 
     /**
-     * @return \surva\badwordblocker\filter\FilterManager
+     * @return FilterManager
      */
     public function getFilterManager(): FilterManager
     {
@@ -152,7 +141,7 @@ class BadWordBlocker extends PluginBase
     }
 
     /**
-     * @return \pocketmine\utils\Config
+     * @return Config
      */
     public function getDefaultMessages(): Config
     {

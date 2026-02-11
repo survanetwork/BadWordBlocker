@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BadWordBlocker | writing speed (spam) filter
+ * BadWordBlocker | writing speed (spam) filter, adds
+ * a minimum delay before the next message can be sent
  */
 
 namespace surva\badwordblocker\filter;
@@ -21,9 +22,6 @@ class SpeedFilter extends Filter
      */
     private array $playersTimeWritten;
 
-    /**
-     * @param  \surva\badwordblocker\filter\FilterManager  $filterManager
-     */
     public function __construct(FilterManager $filterManager)
     {
         $this->filterManager = $filterManager;
